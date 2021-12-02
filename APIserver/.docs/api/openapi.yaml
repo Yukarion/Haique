@@ -72,7 +72,7 @@ paths:
           description: OK
         "400":
           description: Bad Request
-  /api/post_haiku:
+  /api/post-haiku:
     post:
       description: 詠む
       operationId: post-haiku
@@ -83,10 +83,13 @@ paths:
           application/json:
             schema:
               properties:
+                session_id:
+                  type: string
                 content:
                   $ref: '#/components/schemas/_api_post_haiku_content'
               required:
               - content
+              - session_id
               type: object
               x-examples:
                 example-1:
@@ -94,7 +97,6 @@ paths:
                     first: using
                     second: namespace
                     third: std
-        description: haikuのうちcontentを表すjson
       responses:
         "201":
           description: Created
@@ -112,6 +114,15 @@ paths:
         schema:
           type: integer
         style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_2'
+        content:
+          application/json:
+            schema:
+              properties:
+                session_id:
+                  type: string
+              type: object
       responses:
         "200":
           description: OK
@@ -126,19 +137,21 @@ paths:
         schema:
           type: integer
         style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_1'
+        content:
+          application/json:
+            schema:
+              properties:
+                session_id:
+                  type: string
+              type: object
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: object
-                x-examples:
-                  example-1:
-                    sessionID: string
           description: OK
   /api/top:
     get:
-      description: トップhaikuの取得
+      description: トップ30件のhaikuの取得
       operationId: get-top
       parameters: []
       responses:
@@ -157,6 +170,17 @@ paths:
       description: タイムラインの取得
       operationId: get-api-timeline
       parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_3'
+        content:
+          application/json:
+            schema:
+              properties:
+                session_id:
+                  type: string
+              required:
+              - session_id
+              type: object
       responses:
         "200":
           content:
@@ -203,6 +227,15 @@ paths:
           format: int64
           type: integer
         style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_5'
+        content:
+          application/json:
+            schema:
+              properties:
+                session_id:
+                  type: string
+              type: object
       responses:
         "200":
           description: OK
@@ -218,6 +251,15 @@ paths:
           format: int64
           type: integer
         style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_4'
+        content:
+          application/json:
+            schema:
+              properties:
+                session_id:
+                  type: string
+              type: object
       responses:
         "200":
           content:
@@ -229,11 +271,36 @@ paths:
       tags: []
 components:
   requestBodies:
+    inline_object_1:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_1'
     inline_object:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/inline_object'
+    inline_object_5:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_5'
+    inline_object_4:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_4'
+    inline_object_3:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_3'
+    inline_object_2:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_2'
   schemas:
     User:
       properties:
@@ -321,10 +388,9 @@ components:
           created_at: 2019-08-24T14:15:22Z
     inline_response_201:
       example:
-        session_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        session_id: session_id
       properties:
         session_id:
-          format: uuid
           type: string
       required:
       - session_id
@@ -334,10 +400,9 @@ components:
           session_id: string
     inline_response_200:
       example:
-        session_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        session_id: session_id
       properties:
         session_id:
-          format: uuid
           type: string
       required:
       - session_id
@@ -364,10 +429,13 @@ components:
       type: object
     inline_object:
       properties:
+        session_id:
+          type: string
         content:
           $ref: '#/components/schemas/_api_post_haiku_content'
       required:
       - content
+      - session_id
       type: object
       x-examples:
         example-1:
@@ -375,6 +443,23 @@ components:
             first: using
             second: namespace
             third: std
+    inline_object_1:
+      properties:
+        session_id:
+          type: string
+      type: object
+    inline_object_2:
+      properties:
+        session_id:
+          type: string
+      type: object
+    inline_object_3:
+      properties:
+        session_id:
+          type: string
+      required:
+      - session_id
+      type: object
     inline_response_200_1:
       properties:
         user:
@@ -386,6 +471,16 @@ components:
       required:
       - haikus
       - user
+      type: object
+    inline_object_4:
+      properties:
+        session_id:
+          type: string
+      type: object
+    inline_object_5:
+      properties:
+        session_id:
+          type: string
       type: object
     Haiku_author:
       example:

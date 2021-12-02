@@ -39,7 +39,7 @@ func main() {
 	e.POST("/api/signup", c.PostApiSignup)
 
 	// PostHaiku - 
-	e.POST("/api/post_haiku", c.PostHaiku)
+	e.POST("/api/post-haiku", c.PostHaiku)
 
 	// PostSignin - 
 	e.POST("/api/signin", c.PostSignin)
