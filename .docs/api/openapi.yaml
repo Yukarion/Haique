@@ -1,0 +1,403 @@
+openapi: 3.0.0
+info:
+  contact:
+    name: Mackyson
+  description: HaiqueのもろもろのAPI
+  license:
+    name: MIT
+  title: Haique
+  version: "1.0"
+servers:
+- description: localhost
+  url: http://localhost:8080
+paths:
+  /api/signup:
+    post:
+      description: サインアップ
+      operationId: post-api-signup
+      parameters:
+      - explode: true
+        in: query
+        name: user_id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: password
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+          description: Created
+        "409":
+          description: Conflict
+  /api/signin:
+    post:
+      description: ログイン
+      operationId: post-signin
+      parameters:
+      - explode: true
+        in: query
+        name: user_id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: password
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: OK
+        "400":
+          description: Bad Request
+  /api/subscribe/{user_id}:
+    delete:
+      description: リムーブ
+      operationId: delete-api-subscribe-user_id
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: OK
+    post:
+      description: フォロー
+      operationId: post-subscribe
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - explode: true
+        in: cookie
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    sessionID: string
+          description: OK
+  /api/post_haiku:
+    post:
+      description: 詠む
+      operationId: post-user
+      parameters:
+      - explode: true
+        in: cookie
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          application/json:
+            schema:
+              properties:
+                content:
+                  $ref: '#/components/schemas/_api_post_haiku_content'
+              required:
+              - content
+              type: object
+              x-examples:
+                example-1:
+                  content:
+                    first: using
+                    second: namespace
+                    third: std
+        description: haikuのうちcontentを表すjson
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+  /api/top:
+    get:
+      description: トップhaikuの取得
+      operationId: get-top
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Haiku'
+                type: array
+          description: OK
+      summary: top
+      tags: []
+  /api/timeline:
+    get:
+      description: タイムラインの取得
+      operationId: get-api-timeline
+      parameters:
+      - explode: true
+        in: cookie
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Haiku'
+                type: array
+          description: OK
+      summary: timeline
+      tags: []
+  /api/users/{user_id}:
+    get:
+      description: ユーザー情報
+      operationId: get-api-user
+      parameters:
+      - explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+      summary: user_info
+      tags: []
+  /api/{haiku_id}:
+    delete:
+      description: haikuを削除
+      operationId: delete-api-haiku_id
+      parameters:
+      - explode: false
+        in: path
+        name: haiku_id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: OK
+    get:
+      description: haikuの詳細を取得
+      operationId: get-api-haiku_id
+      parameters:
+      - explode: false
+        in: path
+        name: haiku_id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      - explode: true
+        in: cookie
+        name: session_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Haiku'
+          description: OK
+      summary: get_haiku
+      tags: []
+components:
+  requestBodies:
+    inline_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object'
+  schemas:
+    User:
+      example:
+        user_id: 0
+        subscription:
+        - 6
+        - 6
+        posts:
+        - 1
+        - 1
+      properties:
+        user_id:
+          format: int64
+          type: integer
+        subscription:
+          items:
+            format: int64
+            type: integer
+          type: array
+        posts:
+          description: タイムラインをサクッとつくるためにUserがポストのリストを持つ
+          items:
+            format: int64
+            type: integer
+          type: array
+      required:
+      - posts
+      - subscription
+      - user_id
+      title: User
+      type: object
+      x-examples:
+        example-1:
+          user_id: 1
+          subscription:
+          - 1
+          - 2
+          - 3
+          posts:
+          - 1
+          - 2
+          - 3
+    Haiku:
+      example:
+        created_at: 2000-01-23T04:56:07.000+00:00
+        haiku_id: 0
+        content:
+          third: third
+          first: first
+          second: second
+        likes: 6
+      properties:
+        haiku_id:
+          format: int64
+          type: integer
+        content:
+          $ref: '#/components/schemas/_api_post_haiku_content'
+        likes:
+          description: いいね数（実装しないかも？）
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+      required:
+      - content
+      - created_at
+      - haiku_id
+      - likes
+      type: object
+      x-examples:
+        example-1:
+          haiku_id: 0
+          content:
+            first: string
+            second: string
+            third: string
+          likes: 0
+          created_at: 1
+      x-internal: false
+    inline_response_201:
+      example:
+        session_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        session_id:
+          format: uuid
+          type: string
+      required:
+      - session_id
+      type: object
+      x-examples:
+        example-1:
+          session_id: string
+    inline_response_200:
+      example:
+        session_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        session_id:
+          format: uuid
+          type: string
+      required:
+      - session_id
+      type: object
+    _api_post_haiku_content:
+      example:
+        third: third
+        first: first
+        second: second
+      properties:
+        first:
+          minLength: 1
+          type: string
+        second:
+          minLength: 1
+          type: string
+        third:
+          minLength: 1
+          type: string
+      required:
+      - first
+      - second
+      - third
+      type: object
+    inline_object:
+      properties:
+        content:
+          $ref: '#/components/schemas/_api_post_haiku_content'
+      required:
+      - content
+      type: object
+      x-examples:
+        example-1:
+          content:
+            first: using
+            second: namespace
+            third: std
