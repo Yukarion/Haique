@@ -2,10 +2,13 @@ package models
 
 type User struct {
 
-	UserId int64 `json:"user_id"`
+	UserId int32 `json:"user_id"`
 
-	Subscription []int64 `json:"subscription"`
+	Name string `json:"name"`
 
-	// タイムラインをサクッとつくるためにUserがポストのリストを持つ
-	Posts []int64 `json:"posts"`
+	Subscription []int32 `json:"subscription"`
+
+	SubscribedBy []int32 `json:"subscribed_by"`
+
+	Posts []int32 `json:"posts"`
 }

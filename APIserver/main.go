@@ -38,14 +38,14 @@ func main() {
 	// PostApiSignup - 
 	e.POST("/api/signup", c.PostApiSignup)
 
+	// PostHaiku - 
+	e.POST("/api/post_haiku", c.PostHaiku)
+
 	// PostSignin - 
 	e.POST("/api/signin", c.PostSignin)
 
 	// PostSubscribe - 
 	e.POST("/api/subscribe/:user_id", c.PostSubscribe)
-
-	// PostUser - 
-	e.POST("/api/post_haiku", c.PostUser)
 
 
 	// Start server

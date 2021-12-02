@@ -1,5 +1,4 @@
 .docs/api/openapi.yaml
-.openapi-generator-ignore
 Dockerfile
 README.md
 go.mod
@@ -9,7 +8,9 @@ main.go
 models/hello-world.go
 models/model__api_post_haiku_content.go
 models/model_haiku.go
+models/model_haiku_author.go
 models/model_inline_object.go
 models/model_inline_response_200.go
+models/model_inline_response_200_1.go
 models/model_inline_response_201.go
 models/model_user.go

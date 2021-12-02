@@ -1,17 +1,14 @@
 package models
 
-import (
-	"time"
-)
-
 type Haiku struct {
 
-	HaikuId int64 `json:"haiku_id"`
+	HaikuId int32 `json:"haiku_id"`
+
+	Author HaikuAuthor `json:"author"`
 
 	Content ApiPostHaikuContent `json:"content"`
 
-	// いいね数（実装しないかも？）
 	Likes int32 `json:"likes"`
 
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 }

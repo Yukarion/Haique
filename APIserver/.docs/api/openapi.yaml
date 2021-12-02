@@ -27,7 +27,7 @@ paths:
       - explode: true
         in: query
         name: password
-        required: false
+        required: true
         schema:
           type: string
         style: form
@@ -56,7 +56,7 @@ paths:
       - explode: true
         in: query
         name: password
-        required: false
+        required: true
         schema:
           type: string
         style: form
@@ -70,6 +70,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200'
           description: OK
+        "400":
+          description: Bad Request
+  /api/post_haiku:
+    post:
+      description: 詠む
+      operationId: post-haiku
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          application/json:
+            schema:
+              properties:
+                content:
+                  $ref: '#/components/schemas/_api_post_haiku_content'
+              required:
+              - content
+              type: object
+              x-examples:
+                example-1:
+                  content:
+                    first: using
+                    second: namespace
+                    third: std
+        description: haikuのうちcontentを表すjson
+      responses:
+        "201":
+          description: Created
         "400":
           description: Bad Request
   /api/subscribe/{user_id}:
@@ -98,14 +126,6 @@ paths:
         schema:
           type: integer
         style: simple
-      - explode: true
-        in: cookie
-        name: session_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: form
       responses:
         "200":
           content:
@@ -116,42 +136,6 @@ paths:
                   example-1:
                     sessionID: string
           description: OK
-  /api/post_haiku:
-    post:
-      description: 詠む
-      operationId: post-user
-      parameters:
-      - explode: true
-        in: cookie
-        name: session_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: form
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object'
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  $ref: '#/components/schemas/_api_post_haiku_content'
-              required:
-              - content
-              type: object
-              x-examples:
-                example-1:
-                  content:
-                    first: using
-                    second: namespace
-                    third: std
-        description: haikuのうちcontentを表すjson
-      responses:
-        "201":
-          description: Created
-        "400":
-          description: Bad Request
   /api/top:
     get:
       description: トップhaikuの取得
@@ -172,15 +156,7 @@ paths:
     get:
       description: タイムラインの取得
       operationId: get-api-timeline
-      parameters:
-      - explode: true
-        in: cookie
-        name: session_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: form
+      parameters: []
       responses:
         "200":
           content:
@@ -208,9 +184,9 @@ paths:
       responses:
         "200":
           content:
-            application/json:
+            application/xml:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/inline_response_200_1'
           description: OK
       summary: user_info
       tags: []
@@ -242,14 +218,6 @@ paths:
           format: int64
           type: integer
         style: simple
-      - explode: true
-        in: cookie
-        name: session_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: form
       responses:
         "200":
           content:
@@ -268,39 +236,39 @@ components:
             $ref: '#/components/schemas/inline_object'
   schemas:
     User:
-      example:
-        user_id: 0
-        subscription:
-        - 6
-        - 6
-        posts:
-        - 1
-        - 1
       properties:
         user_id:
-          format: int64
           type: integer
+        name:
+          type: string
         subscription:
           items:
-            format: int64
+            type: integer
+          type: array
+        subscribed_by:
+          items:
             type: integer
           type: array
         posts:
-          description: タイムラインをサクッとつくるためにUserがポストのリストを持つ
           items:
-            format: int64
             type: integer
           type: array
       required:
+      - name
       - posts
+      - subscribed_by
       - subscription
       - user_id
-      title: User
       type: object
       x-examples:
         example-1:
           user_id: 1
+          name: hoge
           subscription:
+          - 1
+          - 2
+          - 3
+          subscribed_by:
           - 1
           - 2
           - 3
@@ -310,26 +278,30 @@ components:
           - 3
     Haiku:
       example:
-        created_at: 2000-01-23T04:56:07.000+00:00
+        author:
+          user_id: 6.027456183070403
+          user_name: user_name
+        created_at: created_at
         haiku_id: 0
         content:
           third: third
           first: first
           second: second
-        likes: 6
+        likes: 1
       properties:
         haiku_id:
-          format: int64
           type: integer
+        author:
+          $ref: '#/components/schemas/Haiku_author'
         content:
           $ref: '#/components/schemas/_api_post_haiku_content'
         likes:
-          description: いいね数（実装しないかも？）
           type: integer
         created_at:
-          format: date-time
+          minLength: 1
           type: string
       required:
+      - author
       - content
       - created_at
       - haiku_id
@@ -337,14 +309,16 @@ components:
       type: object
       x-examples:
         example-1:
-          haiku_id: 0
+          haiku_id: -9223372036854776000
+          author:
+            user_id: 1
+            user_name: hoge
           content:
             first: string
             second: string
             third: string
           likes: 0
-          created_at: 1
-      x-internal: false
+          created_at: 2019-08-24T14:15:22Z
     inline_response_201:
       example:
         session_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -401,3 +375,29 @@ components:
             first: using
             second: namespace
             third: std
+    inline_response_200_1:
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        haikus:
+          items:
+            $ref: '#/components/schemas/Haiku'
+          type: array
+      required:
+      - haikus
+      - user
+      type: object
+    Haiku_author:
+      example:
+        user_id: 6.027456183070403
+        user_name: user_name
+      properties:
+        user_id:
+          type: number
+        user_name:
+          minLength: 1
+          type: string
+      required:
+      - user_id
+      - user_name
+      type: object
