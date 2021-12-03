@@ -2,12 +2,26 @@ package handlers
 
 import (
 	"context"
-	"log"
 	"net/http"
 
 	"github.com/Mackyson/Haique/APIserver/models"
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
+
+var ctxBG = context.Background()
+
+func genUUID() (uuid.UUID, error) {
+	return uuid.NewRandom()
+}
+
+func isValidSessionId(session_id models.SessionId) bool { //一旦全通し
+	return true
+}
+
+func hashPW(pw string) string { //一旦平文
+	return pw
+}
 
 // DeleteApiHaikuId -
 func (c *Container) DeleteApiHaikuId(ctx echo.Context) error {
@@ -46,41 +60,13 @@ func (c *Container) GetApiUser(ctx echo.Context) error {
 
 // GetTop - top
 func (c *Container) GetTop(ctx echo.Context) error {
-	val, err := c.RedisClient.Get(context.Background(), "key").Result()
+	val, err := c.RedisClient.Get(ctxBG, "key").Result()
 	if err != nil {
 		return err
 	}
 	return ctx.JSON(http.StatusOK, models.HelloWorld{
 		Message: val,
 	})
-}
-
-// PostApiSignup -
-func (c *Container) PostApiSignup(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, models.HelloWorld{
-		Message: "Hello World",
-	})
-}
-
-// PostHaiku -
-func (c *Container) PostHaiku(ctx echo.Context) error {
-	var payload models.ApiPostHaikuContent
-	if err := (&echo.DefaultBinder{}).BindBody(ctx, &payload); err != nil {
-		return err
-	}
-
-	//if !isValidSessionId(session_id){ reject! }
-	if payload.First == "" || payload.Second == "" || payload.Third == "" {
-		return ctx.HTML(http.StatusBadRequest, "Empty haiku is not allowed")
-	}
-	if err := c.RedisClient.Set(context.Background(), "key", "yo!", 0).Err(); err != nil {
-		log.Println("omg!")
-		return err
-	}
-	log.Println("created")
-	return ctx.HTML(http.StatusCreated, ""+payload.Second)
-
-	//return ctx.NoContent(http.StatusOK)
 }
 
 // PostSignin -

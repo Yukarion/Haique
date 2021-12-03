@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"context"
+
 	"github.com/go-redis/redis/v8"
 )
 
@@ -13,15 +15,25 @@ type Container struct {
 
 // NewContainer returns an empty or an initialized container for your handlers.
 func NewContainer() (Container, error) {
-	containerInit()
+	err := containerInit()
 	c := Container{RedisClient: rClient}
-	return c, nil
+	return c, err
 }
 
-func containerInit() {
+func containerInit() error {
 	rClient = redis.NewClient(&redis.Options{
 		Addr:     "redis:6379",
 		Password: "",
 		DB:       0,
 	})
+	_, err := rClient.SetNX(context.Background(), "global:nextUserId", 0, 0).Result()
+	if err != nil {
+		return err
+	}
+	_, err = rClient.SetNX(context.Background(), "global:nextHaikuId", 0, 0).Result()
+	if err != nil {
+		return err
+	}
+	return nil
+
 }
