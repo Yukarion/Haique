@@ -19,3 +19,4 @@ WORKDIR /app
 COPY ./APIserver .
 EXPOSE 8080
 ENTRYPOINT ["fresh"]
+#変更に追従してビルドしてくれるやつ

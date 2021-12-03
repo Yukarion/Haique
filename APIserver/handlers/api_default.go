@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"context"
+	"log"
 	"net/http"
 
 	"github.com/GIT_USER_ID/GIT_REPO_ID/models"
@@ -44,8 +46,12 @@ func (c *Container) GetApiUser(ctx echo.Context) error {
 
 // GetTop - top
 func (c *Container) GetTop(ctx echo.Context) error {
+	val, err := c.RedisClient.Get(context.Background(), "key").Result()
+	if err != nil {
+		return err
+	}
 	return ctx.JSON(http.StatusOK, models.HelloWorld{
-		Message: "Hello World",
+		Message: val,
 	})
 }
 
@@ -63,7 +69,16 @@ func (c *Container) PostHaiku(ctx echo.Context) error {
 		return err
 	}
 
-	return ctx.HTML(http.StatusOK, payload.First+payload.Second+payload.Third)
+	//if !isValidSessionId(session_id){ reject! }
+	if payload.First == "" || payload.Second == "" || payload.Third == "" {
+		return ctx.HTML(http.StatusBadRequest, "Empty haiku is not allowed")
+	}
+	if err := c.RedisClient.Set(context.Background(), "key", "yo!", 0).Err(); err != nil {
+		log.Println("omg!")
+		return err
+	}
+	log.Println("created")
+	return ctx.HTML(http.StatusCreated, ""+payload.Second)
 
 	//return ctx.NoContent(http.StatusOK)
 }
