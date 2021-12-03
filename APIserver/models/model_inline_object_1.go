@@ -2,5 +2,7 @@ package models
 
 type InlineObject1 struct {
 
-	SessionId string `json:"session_id,omitempty"`
+	Name string `json:"name"`
+
+	Pw string `json:"pw,omitempty"`
 }

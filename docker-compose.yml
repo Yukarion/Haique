@@ -6,7 +6,7 @@ services:
       target: dev
       dockerfile: ./Docker/APIserver/Dockerfile
     container_name: api-server
-    #restart: always
+    restart: always
     ports:
       - 8080:8080
     depends_on:

@@ -15,28 +15,27 @@ paths:
     post:
       description: サインアップ
       operationId: post-api-signup
-      parameters:
-      - explode: true
-        in: query
-        name: user_id
-        required: true
-        schema:
-          format: int64
-          type: integer
-        style: form
-      - explode: true
-        in: query
-        name: password
-        required: true
-        schema:
-          type: string
-        style: form
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                pw:
+                  type: string
+              required:
+              - name
+              type: object
       responses:
         "201":
           content:
             application/json:
+              examples: {}
               schema:
-                $ref: '#/components/schemas/inline_response_201'
+                $ref: '#/components/schemas/SessionId'
           description: Created
         "409":
           description: Conflict
@@ -44,31 +43,31 @@ paths:
     post:
       description: ログイン
       operationId: post-signin
-      parameters:
-      - explode: true
-        in: query
-        name: user_id
-        required: true
-        schema:
-          format: int64
-          type: integer
-        style: form
-      - explode: true
-        in: query
-        name: password
-        required: true
-        schema:
-          type: string
-        style: form
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_1'
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                pw:
+                  type: string
+              required:
+              - name
+              type: object
       responses:
         "200":
           content:
             application/json:
+              examples: {}
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/SessionId'
             application/xml:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                properties: {}
+                type: object
           description: OK
         "400":
           description: Bad Request
@@ -78,13 +77,22 @@ paths:
       operationId: post-haiku
       parameters: []
       requestBody:
-        $ref: '#/components/requestBodies/inline_object'
+        $ref: '#/components/requestBodies/inline_object_2'
         content:
           application/json:
+            examples:
+              example-1:
+                value:
+                  session_id:
+                    id: null
+                  content:
+                    first: string
+                    second: string
+                    third: string
             schema:
               properties:
                 session_id:
-                  type: string
+                  $ref: '#/components/schemas/SessionId'
                 content:
                   $ref: '#/components/schemas/_api_post_haiku_content'
               required:
@@ -115,14 +123,10 @@ paths:
           type: integer
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/inline_object_2'
         content:
           application/json:
             schema:
-              properties:
-                session_id:
-                  type: string
-              type: object
+              $ref: '#/components/schemas/SessionId'
       responses:
         "200":
           description: OK
@@ -138,14 +142,10 @@ paths:
           type: integer
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/inline_object_1'
         content:
           application/json:
             schema:
-              properties:
-                session_id:
-                  type: string
-              type: object
+              $ref: '#/components/schemas/SessionId'
       responses:
         "200":
           description: OK
@@ -171,16 +171,10 @@ paths:
       operationId: get-api-timeline
       parameters: []
       requestBody:
-        $ref: '#/components/requestBodies/inline_object_3'
         content:
           application/json:
             schema:
-              properties:
-                session_id:
-                  type: string
-              required:
-              - session_id
-              type: object
+              $ref: '#/components/schemas/SessionId'
       responses:
         "200":
           content:
@@ -210,7 +204,7 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/inline_response_200'
           description: OK
       summary: user_info
       tags: []
@@ -228,14 +222,10 @@ paths:
           type: integer
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/inline_object_5'
         content:
           application/json:
             schema:
-              properties:
-                session_id:
-                  type: string
-              type: object
+              $ref: '#/components/schemas/SessionId'
       responses:
         "200":
           description: OK
@@ -252,7 +242,7 @@ paths:
           type: integer
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/inline_object_4'
+        $ref: '#/components/requestBodies/inline_object_3'
         content:
           application/json:
             schema:
@@ -281,16 +271,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/inline_object'
-    inline_object_5:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_5'
-    inline_object_4:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_4'
     inline_object_3:
       content:
         application/json:
@@ -386,26 +366,37 @@ components:
             third: string
           likes: 0
           created_at: 2019-08-24T14:15:22Z
-    inline_response_201:
+    SessionId:
       example:
-        session_id: session_id
+        id: ""
       properties:
-        session_id:
-          type: string
+        id:
+          description: 言語固有のUUID型を使う
+          format: uuid
       required:
-      - session_id
+      - id
+      title: SessionId
       type: object
       x-examples:
         example-1:
-          session_id: string
-    inline_response_200:
-      example:
-        session_id: session_id
+          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+    inline_object:
       properties:
-        session_id:
+        name:
+          type: string
+        pw:
           type: string
       required:
-      - session_id
+      - name
+      type: object
+    inline_object_1:
+      properties:
+        name:
+          type: string
+        pw:
+          type: string
+      required:
+      - name
       type: object
     _api_post_haiku_content:
       example:
@@ -427,10 +418,10 @@ components:
       - second
       - third
       type: object
-    inline_object:
+    inline_object_2:
       properties:
         session_id:
-          type: string
+          $ref: '#/components/schemas/SessionId'
         content:
           $ref: '#/components/schemas/_api_post_haiku_content'
       required:
@@ -443,24 +434,7 @@ components:
             first: using
             second: namespace
             third: std
-    inline_object_1:
-      properties:
-        session_id:
-          type: string
-      type: object
-    inline_object_2:
-      properties:
-        session_id:
-          type: string
-      type: object
-    inline_object_3:
-      properties:
-        session_id:
-          type: string
-      required:
-      - session_id
-      type: object
-    inline_response_200_1:
+    inline_response_200:
       properties:
         user:
           $ref: '#/components/schemas/User'
@@ -472,12 +446,7 @@ components:
       - haikus
       - user
       type: object
-    inline_object_4:
-      properties:
-        session_id:
-          type: string
-      type: object
-    inline_object_5:
+    inline_object_3:
       properties:
         session_id:
           type: string

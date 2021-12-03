@@ -2,7 +2,7 @@ package models
 
 type InlineObject struct {
 
-	SessionId string `json:"session_id"`
+	Name string `json:"name"`
 
-	Content ApiPostHaikuContent `json:"content"`
+	Pw string `json:"pw,omitempty"`
 }

@@ -2,5 +2,7 @@ package models
 
 type InlineResponse200 struct {
 
-	SessionId string `json:"session_id"`
+	User User `json:"user"`
+
+	Haikus []Haiku `json:"haikus"`
 }
