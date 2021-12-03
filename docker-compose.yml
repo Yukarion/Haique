@@ -1,0 +1,24 @@
+version: '3.4'
+services:
+  api-server:
+    build:
+      context: .
+      dockerfile: ./Docker/APIserver/Dockerfile
+    container_name: api-server
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+    tty: true
+    volumes:
+      - ".APIserver/:/app"
+  #BFF:
+    #
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ".docker/redis/data:/data" 
