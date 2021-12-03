@@ -5,23 +5,10 @@ import (
 	"net/http"
 
 	"github.com/Mackyson/Haique/APIserver/models"
-	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
 var ctxBG = context.Background()
-
-func genUUID() (uuid.UUID, error) {
-	return uuid.NewRandom()
-}
-
-func isValidSessionId(session_id models.SessionId) bool { //一旦全通し
-	return true
-}
-
-func hashPW(pw string) string { //一旦平文
-	return pw
-}
 
 // DeleteApiHaikuId -
 func (c *Container) DeleteApiHaikuId(ctx echo.Context) error {
@@ -66,13 +53,6 @@ func (c *Container) GetTop(ctx echo.Context) error {
 	}
 	return ctx.JSON(http.StatusOK, models.HelloWorld{
 		Message: val,
-	})
-}
-
-// PostSignin -
-func (c *Container) PostSignin(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, models.HelloWorld{
-		Message: "Hello World",
 	})
 }
 
