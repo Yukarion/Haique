@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/GIT_USER_ID/GIT_REPO_ID/models"
+	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/labstack/echo/v4"
 )
 
