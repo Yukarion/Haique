@@ -3,16 +3,17 @@ services:
   api-server:
     build:
       context: .
+      target: dev
       dockerfile: ./Docker/APIserver/Dockerfile
     container_name: api-server
-    restart: always
+    #restart: always
     ports:
       - 8080:8080
     depends_on:
       - redis
     tty: true
     volumes:
-      - ".APIserver/:/app"
+      - "./APIserver/:/app"
   #BFF:
     #
   redis:
@@ -21,4 +22,4 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ".docker/redis/data:/data" 
+      - "./Docker/redis/data:/data" 
