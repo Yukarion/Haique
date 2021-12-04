@@ -49,6 +49,6 @@ func (c *Container) PostApiSignup(ctx echo.Context) error {
 		return err
 	}
 	c.RedisClient.Set(ctxBG, name+":user_id", userId, 0)
-	c.RedisClient.Set(ctxBG, session_id.String()+":linked_user_id", userId, 0)
-	return ctx.JSON(http.StatusCreated, models.SessionId{Id: session_id})
+	c.RedisClient.Set(ctxBG, session_id+":linked_user_id", userId, 0)
+	return ctx.JSON(http.StatusCreated, models.SessionId{SessionId: session_id})
 }

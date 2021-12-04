@@ -35,8 +35,8 @@ func (c *Container) PostSignin(ctx echo.Context) error {
 		if err != nil {
 			return err
 		}
-		c.RedisClient.Set(ctxBG, session_id.String()+":linked_user_id", userId, 0)
-		return ctx.JSON(http.StatusOK, models.SessionId{Id: session_id})
+		c.RedisClient.Set(ctxBG, session_id+":linked_user_id", userId, 0)
+		return ctx.JSON(http.StatusOK, models.SessionId{SessionId: session_id})
 	}
 	return ctx.NoContent(http.StatusBadRequest)
 }
