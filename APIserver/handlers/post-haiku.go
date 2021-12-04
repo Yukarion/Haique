@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"context"
-	"log"
 	"net/http"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/labstack/echo/v4"
@@ -16,19 +17,26 @@ func (c *Container) PostHaiku(ctx echo.Context) error {
 		return err
 	}
 	session_id := payload.SessionId
+
 	content := payload.Content
-	if !isValidSessionId(session_id) {
-		ctx.NoContent(http.StatusBadRequest)
-	}
+	content = eraseSpaceInContent(content)
 	if content.First == "" || content.Second == "" || content.Third == "" {
-		return ctx.HTML(http.StatusBadRequest, "Empty haiku is not allowed")
+		return ctx.HTML(http.StatusBadRequest, "containing empty clause")
 	}
-	if err := c.RedisClient.Set(context.Background(), "key", "yo!", 0).Err(); err != nil {
-		log.Println("omg!")
+	author_id, err := c.RedisClient.Get(ctxBG, session_id+":linked_user_id").Result()
+	if err != nil {
+		return ctx.HTML(http.StatusBadRequest, "invalid session id")
+	}
+	haiku_id, err := c.RedisClient.Incr(ctxBG, "global:next_haiku_id").Result()
+	if err != nil {
 		return err
 	}
-	log.Println("created")
-	return ctx.HTML(http.StatusCreated, ""+content.Second)
+	haiku_id_str := strconv.FormatInt(haiku_id, 10)
+	current_unix_time := time.Now().Unix()
+	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":content", strings.Join([]string{content.First, content.Second, content.Third}, " "), 0)
+	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":author_id", author_id, 0)
+	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":likes", 0, 0)
+	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":createdAt", current_unix_time, 0)
 
-	//return ctx.NoContent(http.StatusOK)
+	return ctx.NoContent(http.StatusCreated)
 }
