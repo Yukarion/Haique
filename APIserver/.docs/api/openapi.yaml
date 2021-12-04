@@ -28,6 +28,7 @@ paths:
                   type: string
               required:
               - name
+              - pw
               type: object
       responses:
         "201":
@@ -56,6 +57,7 @@ paths:
                   type: string
               required:
               - name
+              - pw
               type: object
       responses:
         "200":
@@ -80,10 +82,9 @@ paths:
         content:
           application/json:
             examples:
-              example-1:
+              example-100:
                 value:
-                  session_id:
-                    id: null
+                  session_id: 1ffd059c-17ea-40a8-8aef-70fd0307db82
                   content:
                     first: string
                     second: string
@@ -198,7 +199,6 @@ paths:
               properties:
                 session_id:
                   format: uuid
-                  minLength: 1
                   type: string
               required:
               - session_id
@@ -260,7 +260,6 @@ paths:
               properties:
                 session_id:
                   format: uuid
-                  minLength: 1
                   type: string
               required:
               - session_id
@@ -292,6 +291,8 @@ paths:
                 session_id:
                   format: uuid
                   type: string
+              required:
+              - session_id
               type: object
       responses:
         "200":
@@ -390,7 +391,7 @@ components:
       example:
         author:
           user_id: 6
-        created_at: ""
+        created_at: 5
         haiku_id: 0
         content:
           third: third
@@ -409,6 +410,8 @@ components:
           type: integer
         created_at:
           description: unixtime
+          format: int64
+          type: integer
       required:
       - author
       - content
@@ -436,6 +439,7 @@ components:
           type: string
       required:
       - name
+      - pw
       type: object
     inline_response_201:
       example:
@@ -443,7 +447,6 @@ components:
       properties:
         session_id:
           format: uuid
-          minLength: 1
           type: string
       required:
       - session_id
@@ -459,6 +462,7 @@ components:
           type: string
       required:
       - name
+      - pw
       type: object
     _api_post_haiku_content:
       example:
@@ -523,7 +527,6 @@ components:
       properties:
         session_id:
           format: uuid
-          minLength: 1
           type: string
       required:
       - session_id
@@ -548,12 +551,13 @@ components:
         session_id:
           format: uuid
           type: string
+      required:
+      - session_id
       type: object
     inline_object_7:
       properties:
         session_id:
           format: uuid
-          minLength: 1
           type: string
       required:
       - session_id
