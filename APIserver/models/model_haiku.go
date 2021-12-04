@@ -10,5 +10,5 @@ type Haiku struct {
 	Likes int32 `json:"likes"`
 
 	// unixtime
-	CreatedAt Int64 `json:"created_at"`
+	CreatedAt int64 `json:"created_at"`
 }
