@@ -1,8 +1,7 @@
 package models
 
 type Haiku struct {
-
-	HaikuId int32 `json:"haiku_id"`
+	HaikuId int64 `json:"haiku_id"`
 
 	Author HaikuAuthor `json:"author"`
 
@@ -10,5 +9,6 @@ type Haiku struct {
 
 	Likes int32 `json:"likes"`
 
-	CreatedAt string `json:"created_at"`
+	// unixtime
+	CreatedAt Int64 `json:"created_at"`
 }

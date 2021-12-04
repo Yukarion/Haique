@@ -326,9 +326,8 @@ components:
     Haiku:
       example:
         author:
-          user_id: 6.027456183070403
-          user_name: user_name
-        created_at: created_at
+          user_id: 6
+        created_at: ""
         haiku_id: 0
         content:
           third: third
@@ -337,6 +336,7 @@ components:
         likes: 1
       properties:
         haiku_id:
+          format: int64
           type: integer
         author:
           $ref: '#/components/schemas/Haiku_author'
@@ -345,8 +345,7 @@ components:
         likes:
           type: integer
         created_at:
-          minLength: 1
-          type: string
+          description: unixtime
       required:
       - author
       - content
@@ -453,15 +452,11 @@ components:
       type: object
     Haiku_author:
       example:
-        user_id: 6.027456183070403
-        user_name: user_name
+        user_id: 6
       properties:
         user_id:
-          type: number
-        user_name:
-          minLength: 1
-          type: string
+          format: int64
+          type: integer
       required:
       - user_id
-      - user_name
       type: object
