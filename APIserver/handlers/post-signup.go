@@ -44,7 +44,7 @@ func (c *Container) PostApiSignup(ctx echo.Context) error {
 		return ctx.NoContent(http.StatusConflict)
 	}
 	//pwは上でsetされていることに注意
-	userId, err := c.RedisClient.Incr(ctxBG, "global:nextUserId").Result()
+	userId, err := c.RedisClient.Incr(ctxBG, "global:next_user_id").Result()
 	if err != nil {
 		return err
 	}

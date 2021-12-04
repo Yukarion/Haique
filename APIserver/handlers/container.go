@@ -26,11 +26,11 @@ func containerInit() error {
 		Password: "",
 		DB:       0,
 	})
-	_, err := rClient.SetNX(context.Background(), "global:nextUserId", 0, 0).Result()
+	_, err := rClient.SetNX(context.Background(), "global:next_user_id", 0, 0).Result()
 	if err != nil {
 		return err
 	}
-	_, err = rClient.SetNX(context.Background(), "global:nextHaikuId", 0, 0).Result()
+	_, err = rClient.SetNX(context.Background(), "global:next_haiku_id", 0, 0).Result()
 	if err != nil {
 		return err
 	}
