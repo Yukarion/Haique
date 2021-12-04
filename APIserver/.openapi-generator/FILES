@@ -13,6 +13,10 @@ models/model_inline_object.go
 models/model_inline_object_1.go
 models/model_inline_object_2.go
 models/model_inline_object_3.go
+models/model_inline_object_4.go
+models/model_inline_object_5.go
+models/model_inline_object_6.go
+models/model_inline_object_7.go
 models/model_inline_response_200.go
-models/model_session_id.go
+models/model_inline_response_201.go
 models/model_user.go

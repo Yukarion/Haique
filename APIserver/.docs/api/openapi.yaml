@@ -35,7 +35,7 @@ paths:
             application/json:
               examples: {}
               schema:
-                $ref: '#/components/schemas/SessionId'
+                $ref: '#/components/schemas/inline_response_201'
           description: Created
         "409":
           description: Conflict
@@ -63,11 +63,10 @@ paths:
             application/json:
               examples: {}
               schema:
-                $ref: '#/components/schemas/SessionId'
+                $ref: '#/components/schemas/inline_response_201'
             application/xml:
               schema:
-                properties: {}
-                type: object
+                $ref: '#/components/schemas/inline_response_201'
           description: OK
         "400":
           description: Bad Request
@@ -92,7 +91,8 @@ paths:
             schema:
               properties:
                 session_id:
-                  $ref: '#/components/schemas/SessionId'
+                  format: uuid
+                  type: string
                 content:
                   $ref: '#/components/schemas/_api_post_haiku_content'
               required:
@@ -123,10 +123,20 @@ paths:
           type: integer
         style: simple
       requestBody:
+        $ref: '#/components/requestBodies/inline_object_4'
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionId'
+              properties:
+                session_id:
+                  format: uuid
+                  type: string
+              required:
+              - session_id
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
       responses:
         "200":
           description: OK
@@ -142,10 +152,20 @@ paths:
           type: integer
         style: simple
       requestBody:
+        $ref: '#/components/requestBodies/inline_object_3'
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionId'
+              properties:
+                session_id:
+                  format: uuid
+                  type: string
+              required:
+              - session_id
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
       responses:
         "200":
           description: OK
@@ -171,10 +191,21 @@ paths:
       operationId: get-api-timeline
       parameters: []
       requestBody:
+        $ref: '#/components/requestBodies/inline_object_5'
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionId'
+              properties:
+                session_id:
+                  format: uuid
+                  minLength: 1
+                  type: string
+              required:
+              - session_id
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
       responses:
         "200":
           content:
@@ -222,10 +253,21 @@ paths:
           type: integer
         style: simple
       requestBody:
+        $ref: '#/components/requestBodies/inline_object_7'
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionId'
+              properties:
+                session_id:
+                  format: uuid
+                  minLength: 1
+                  type: string
+              required:
+              - session_id
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
       responses:
         "200":
           description: OK
@@ -242,12 +284,13 @@ paths:
           type: integer
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/inline_object_3'
+        $ref: '#/components/requestBodies/inline_object_6'
         content:
           application/json:
             schema:
               properties:
                 session_id:
+                  format: uuid
                   type: string
               type: object
       responses:
@@ -271,6 +314,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/inline_object'
+    inline_object_7:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_7'
+    inline_object_6:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_6'
+    inline_object_5:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_5'
+    inline_object_4:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_4'
     inline_object_3:
       content:
         application/json:
@@ -365,20 +428,6 @@ components:
             third: string
           likes: 0
           created_at: 2019-08-24T14:15:22Z
-    SessionId:
-      example:
-        id: ""
-      properties:
-        id:
-          description: 言語固有のUUID型を使う
-          format: uuid
-      required:
-      - id
-      title: SessionId
-      type: object
-      x-examples:
-        example-1:
-          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
     inline_object:
       properties:
         name:
@@ -388,6 +437,20 @@ components:
       required:
       - name
       type: object
+    inline_response_201:
+      example:
+        session_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        session_id:
+          format: uuid
+          minLength: 1
+          type: string
+      required:
+      - session_id
+      type: object
+      x-examples:
+        example-1:
+          session_id: hoge
     inline_object_1:
       properties:
         name:
@@ -420,7 +483,8 @@ components:
     inline_object_2:
       properties:
         session_id:
-          $ref: '#/components/schemas/SessionId'
+          format: uuid
+          type: string
         content:
           $ref: '#/components/schemas/_api_post_haiku_content'
       required:
@@ -433,6 +497,40 @@ components:
             first: using
             second: namespace
             third: std
+    inline_object_3:
+      properties:
+        session_id:
+          format: uuid
+          type: string
+      required:
+      - session_id
+      type: object
+      x-examples:
+        example-1:
+          session_id: hoge
+    inline_object_4:
+      properties:
+        session_id:
+          format: uuid
+          type: string
+      required:
+      - session_id
+      type: object
+      x-examples:
+        example-1:
+          session_id: hoge
+    inline_object_5:
+      properties:
+        session_id:
+          format: uuid
+          minLength: 1
+          type: string
+      required:
+      - session_id
+      type: object
+      x-examples:
+        example-1:
+          session_id: hoge
     inline_response_200:
       properties:
         user:
@@ -445,11 +543,24 @@ components:
       - haikus
       - user
       type: object
-    inline_object_3:
+    inline_object_6:
       properties:
         session_id:
+          format: uuid
           type: string
       type: object
+    inline_object_7:
+      properties:
+        session_id:
+          format: uuid
+          minLength: 1
+          type: string
+      required:
+      - session_id
+      type: object
+      x-examples:
+        example-1:
+          session_id: hoge
     Haiku_author:
       example:
         user_id: 6

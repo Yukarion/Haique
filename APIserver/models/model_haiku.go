@@ -1,6 +1,7 @@
 package models
 
 type Haiku struct {
+
 	HaikuId int64 `json:"haiku_id"`
 
 	Author HaikuAuthor `json:"author"`

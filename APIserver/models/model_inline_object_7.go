@@ -1,6 +1,6 @@
 package models
 
-type InlineResponse200 struct {
+type InlineObject7 struct {
 
 	SessionId string `json:"session_id"`
 }
