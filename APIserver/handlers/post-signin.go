@@ -22,7 +22,7 @@ func (c *Container) PostSignin(ctx echo.Context) error {
 
 	hashedPw, err := c.RedisClient.Get(ctxBG, name+":pw").Result()
 	if err != nil {
-		return err
+		ctx.HTML(http.StatusBadRequest, "not registered (maybe typo)")
 	}
 
 	if isValidPassword(hashedPw, rawPw) {
