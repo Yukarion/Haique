@@ -11,13 +11,11 @@ import (
 
 // GetTop - top
 func (c *Container) GetTop(ctx echo.Context) error {
-	var (
-		haiku_list []models.Haiku
-	)
+	var haiku_list []models.Haiku
+
 	haiku_id_list, err := c.RedisClient.LRange(ctxBG, "global:top_haiku_id_list", 0, -1).Result()
 	if err != nil {
 		return err
-
 	}
 	log.Println(haiku_id_list)
 	for _, haiku_id_str := range haiku_id_list {
