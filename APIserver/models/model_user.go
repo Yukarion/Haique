@@ -10,5 +10,7 @@ type User struct {
 
 	SubscribedBy []int64 `json:"subscribed_by"`
 
-	HaikuIdList []int64 `json:"haiku_id_list"`
+	AuthorHaikuIdList []int64 `json:"author_haiku_id_list"`
+
+	TimelineHaikuIdList []int64 `json:"timeline_haiku_id_list"`
 }

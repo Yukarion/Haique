@@ -17,25 +17,25 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// DeleteApiHaikuId -
-	e.DELETE("/api/:haiku_id", c.DeleteApiHaikuId)
+	e.DELETE("/api/:haiku_id", c.DeleteHaiku)
 
 	// DeleteApiSubscribeUserId -
-	e.DELETE("/api/subscribe/:user_id", c.DeleteApiSubscribeUserId)
+	e.DELETE("/api/subscribe/:user_id", c.DeleteSubscribe)
 
 	// GetApiHaikuId - get_haiku
-	e.GET("/api/:haiku_id", c.GetApiHaikuId)
+	e.GET("/api/:haiku_id", c.GetHaiku)
 
 	// GetApiTimeline - timeline
-	e.GET("/api/timeline", c.GetApiTimeline)
+	e.GET("/api/timeline", c.GetTimeline)
 
 	// GetApiUser - user_info
-	e.GET("/api/users/:user_id", c.GetApiUser)
+	e.GET("/api/users/:user_id", c.GetUser)
 
 	// GetTop - top
 	e.GET("/api/top", c.GetTop)
 
 	// PostApiSignup -
-	e.POST("/api/signup", c.PostApiSignup)
+	e.POST("/api/signup", c.PostSignup)
 
 	// PostHaiku -
 	e.POST("/api/post-haiku", c.PostHaiku)

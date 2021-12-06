@@ -14,7 +14,7 @@ paths:
   /api/signup:
     post:
       description: サインアップ
-      operationId: post-api-signup
+      operationId: post-signup
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/inline_object'
@@ -107,7 +107,7 @@ paths:
   /api/subscribe/{user_id}:
     delete:
       description: リムーブ
-      operationId: delete-api-subscribe-user_id
+      operationId: delete-subscribe
       parameters:
       - explode: false
         in: path
@@ -194,7 +194,7 @@ paths:
   /api/timeline:
     get:
       description: タイムラインの取得
-      operationId: get-api-timeline
+      operationId: get-timeline
       parameters: []
       requestBody:
         $ref: '#/components/requestBodies/inline_object_5'
@@ -211,6 +211,16 @@ paths:
               x-examples:
                 example-1:
                   session_id: hoge
+          application/xml:
+            schema:
+              properties:
+                start:
+                  description: timelineのN番目のhaikuを起点とする
+                  type: integer
+                end:
+                  description: M番目を終点とする
+                  type: integer
+              type: object
       responses:
         "200":
           content:
@@ -226,7 +236,7 @@ paths:
   /api/users/{user_id}:
     get:
       description: ユーザー情報
-      operationId: get-api-user
+      operationId: get-user
       parameters:
       - explode: false
         in: path
@@ -248,7 +258,7 @@ paths:
   /api/{haiku_id}:
     delete:
       description: haikuを削除
-      operationId: delete-api-haiku_id
+      operationId: delete-haiku
       parameters:
       - explode: false
         in: path
@@ -278,7 +288,7 @@ paths:
           description: OK
     get:
       description: haikuの詳細を取得
-      operationId: get-api-haiku_id
+      operationId: get-haiku
       parameters:
       - explode: false
         in: path
@@ -319,6 +329,9 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/inline_object_5'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/inline_object_5'
     inline_object_4:
       content:
         application/json:
@@ -338,16 +351,19 @@ components:
     User:
       example:
         user_id: 0
+        timeline_haiku_id_list:
+        - 5
+        - 5
         subscribed_by:
         - 1
         - 1
         name: name
+        author_haiku_id_list:
+        - 5
+        - 5
         subscription:
         - 6
         - 6
-        haiku_id_list:
-        - 5
-        - 5
       properties:
         user_id:
           format: int64
@@ -364,16 +380,22 @@ components:
             format: int64
             type: integer
           type: array
-        haiku_id_list:
+        author_haiku_id_list:
+          items:
+            format: int64
+            type: integer
+          type: array
+        timeline_haiku_id_list:
           items:
             format: int64
             type: integer
           type: array
       required:
-      - haiku_id_list
+      - author_haiku_id_list
       - name
       - subscribed_by
       - subscription
+      - timeline_haiku_id_list
       - user_id
       type: object
       x-examples:
@@ -552,16 +574,19 @@ components:
       example:
         author:
           user_id: 0
+          timeline_haiku_id_list:
+          - 5
+          - 5
           subscribed_by:
           - 1
           - 1
           name: name
+          author_haiku_id_list:
+          - 5
+          - 5
           subscription:
           - 6
           - 6
-          haiku_id_list:
-          - 5
-          - 5
         haiku:
           created_at: 5
           author_id: 6

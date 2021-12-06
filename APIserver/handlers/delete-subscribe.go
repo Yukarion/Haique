@@ -7,8 +7,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// DeleteApiSubscribeUserId -
-func (c *Container) DeleteApiSubscribeUserId(ctx echo.Context) error {
+// DeleteSubscribe -
+func (c *Container) DeleteSubscribe(ctx echo.Context) error {
 	var payload models.SessionId
 
 	if err := (&echo.DefaultBinder{}).BindBody(ctx, &payload); err != nil {

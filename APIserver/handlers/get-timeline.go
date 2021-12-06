@@ -8,8 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// GetApiTimeline - timeline
-func (c *Container) GetApiTimeline(ctx echo.Context) error {
+// GetTimeline - timeline
+func (c *Container) GetTimeline(ctx echo.Context) error {
 	var payload models.SessionId
 
 	if err := (&echo.DefaultBinder{}).BindBody(ctx, &payload); err != nil {

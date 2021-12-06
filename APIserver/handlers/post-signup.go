@@ -11,8 +11,8 @@ import (
 
 const STRETCH_NUM = 5
 
-// PostApiSignup -
-func (c *Container) PostApiSignup(ctx echo.Context) error {
+// PostSignup -
+func (c *Container) PostSignup(ctx echo.Context) error {
 	var payload models.InlineObject1
 	if err := (&echo.DefaultBinder{}).BindBody(ctx, &payload); err != nil {
 		return err
