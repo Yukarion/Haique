@@ -45,17 +45,6 @@ func (c *Container) GetApiUser(ctx echo.Context) error {
 	})
 }
 
-// GetTop - top
-func (c *Container) GetTop(ctx echo.Context) error {
-	val, err := c.RedisClient.Get(ctxBG, "key").Result()
-	if err != nil {
-		return err
-	}
-	return ctx.JSON(http.StatusOK, models.HelloWorld{
-		Message: val,
-	})
-}
-
 // PostSubscribe -
 func (c *Container) PostSubscribe(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, models.HelloWorld{

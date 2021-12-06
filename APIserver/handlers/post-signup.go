@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/labstack/echo/v4"
@@ -44,11 +45,13 @@ func (c *Container) PostApiSignup(ctx echo.Context) error {
 		return ctx.NoContent(http.StatusConflict)
 	}
 	//pwは上でsetされていることに注意
-	userId, err := c.RedisClient.Incr(ctxBG, "global:next_user_id").Result()
+	user_id, err := c.RedisClient.Incr(ctxBG, "global:next_user_id").Result()
 	if err != nil {
 		return err
 	}
-	c.RedisClient.Set(ctxBG, name+":user_id", userId, 0)
-	c.RedisClient.Set(ctxBG, session_id+":linked_user_id", userId, 0)
+	user_id_str := strconv.Itoa(int(user_id))
+	c.RedisClient.Set(ctxBG, name+":user_id", user_id, 0)
+	c.RedisClient.Set(ctxBG, session_id+":linked_user_id", user_id, 0)
+	c.RedisClient.Set(ctxBG, "user_id:"+user_id_str+":name", name, 0)
 	return ctx.JSON(http.StatusCreated, models.SessionId{SessionId: session_id})
 }
