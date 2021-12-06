@@ -15,7 +15,7 @@ func genUUID() (string, error) {
 func isValidSessionId(session_id models.SessionId) bool { //一旦全通し
 	//これいらないかも。
 	/*
-		author_id, err := c.RedisClient.Get(ctxBG, session_id.Id.String()+":linked_user_id").Result()
+		user_id, err := c.RedisClient.Get(ctxBG, session_id+":linked_user_id").Result()
 		if err != nil {
 			return ctx.HTML(http.StatusBadRequest, "invalid session id")
 		}
