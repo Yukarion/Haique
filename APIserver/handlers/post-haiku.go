@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/Mackyson/Haique/APIserver/models"
@@ -42,7 +41,7 @@ func (c *Container) PostHaiku(ctx echo.Context) error {
 	}
 
 	current_unix_time := time.Now().Unix()
-	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":content", strings.Join([]string{content.First, content.Second, content.Third, author_name}, " "), 0)
+	c.RedisClient.RPush(ctxBG, "haiku_id:"+haiku_id_str+":content", content.First, content.Second, content.Third, author_name)
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":author_id", author_id, 0)
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":likes", 0, 0)
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":created_at", current_unix_time, 0)
