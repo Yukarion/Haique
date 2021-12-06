@@ -13,17 +13,25 @@ var rClient *redis.Client
 
 // Container will hold all dependencies for your application.
 type Container struct {
-	RedisClient *redis.Client
+	RedisClient   *redis.Client
+	UUIDgenerator func() (string, error)
 }
 
 // NewContainer returns an empty or an initialized container for your handlers.
+func NewContainerForTest(uuid_generator func() (string, error)) (Container, error) {
+	//genUUIDをmain.goで注入するのは階層的にアレなので避けたい
+	//オーバーロードがあればこんなダサいことにはならないのに……
+	err := redisClientInit()
+	c := Container{RedisClient: rClient, UUIDgenerator: uuid_generator}
+	return c, err
+}
 func NewContainer() (Container, error) {
-	err := containerInit()
-	c := Container{RedisClient: rClient}
+	err := redisClientInit()
+	c := Container{RedisClient: rClient, UUIDgenerator: genUUID}
 	return c, err
 }
 
-func containerInit() error {
+func redisClientInit() error {
 	rClient = redis.NewClient(&redis.Options{
 		Addr:     "redis:6379",
 		Password: "",

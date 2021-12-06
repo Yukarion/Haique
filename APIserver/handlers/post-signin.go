@@ -31,7 +31,7 @@ func (c *Container) PostSignin(ctx echo.Context) error {
 			log.Println(name, err)
 			return err
 		}
-		session_id, err := genUUID()
+		session_id, err := c.UUIDgenerator()
 		if err != nil {
 			return err
 		}

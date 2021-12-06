@@ -25,7 +25,7 @@ func (c *Container) PostSignup(ctx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	session_id, err := genUUID()
+	session_id, err := c.UUIDgenerator()
 	if err != nil {
 		return err
 	}
