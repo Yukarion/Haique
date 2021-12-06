@@ -24,13 +24,6 @@ func (c *Container) GetApiHaikuId(ctx echo.Context) error {
 	})
 }
 
-// GetApiTimeline - timeline
-func (c *Container) GetApiTimeline(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, models.HelloWorld{
-		Message: "Hello World",
-	})
-}
-
 // GetApiUser - user_info
 func (c *Container) GetApiUser(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, models.HelloWorld{

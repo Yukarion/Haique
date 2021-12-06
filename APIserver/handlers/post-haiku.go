@@ -45,6 +45,8 @@ func (c *Container) PostHaiku(ctx echo.Context) error {
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":likes", 0, 0)
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":created_at", current_unix_time, 0)
 
+	c.RedisClient.SAdd(ctxBG, "user_id:"+author_id_str+":haiku_id_list", haiku_id)
+
 	c.RedisClient.LPush(ctxBG, "global:top_haiku_id_list", haiku_id)
 	c.RedisClient.RPop(ctxBG, "global:top_haiku_id_list")
 
