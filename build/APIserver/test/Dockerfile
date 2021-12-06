@@ -5,4 +5,4 @@ WORKDIR /app
 COPY ./APIserver .
 RUN go mod download
 EXPOSE 8080
-ENTRYPOINT ["go","test"]
+ENTRYPOINT ["go","test","-v","./handlers"]

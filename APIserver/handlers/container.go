@@ -21,19 +21,19 @@ type Container struct {
 func NewContainerForTest(uuid_generator func() (string, error)) (Container, error) {
 	//genUUIDをmain.goで注入するのは階層的にアレなので避けたい
 	//オーバーロードがあればこんなダサいことにはならないのに……
-	err := redisClientInit()
+	err := redisClientInit("test-redis")
 	c := Container{RedisClient: rClient, UUIDgenerator: uuid_generator}
 	return c, err
 }
 func NewContainer() (Container, error) {
-	err := redisClientInit()
+	err := redisClientInit("redis")
 	c := Container{RedisClient: rClient, UUIDgenerator: genUUID}
 	return c, err
 }
 
-func redisClientInit() error {
+func redisClientInit(hostname string) error {
 	rClient = redis.NewClient(&redis.Options{
-		Addr:     "redis:6379",
+		Addr:     hostname + ":6379",
 		Password: "",
 		DB:       0,
 	})
