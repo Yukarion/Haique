@@ -81,14 +81,7 @@ paths:
         $ref: '#/components/requestBodies/inline_object_2'
         content:
           application/json:
-            examples:
-              example-100:
-                value:
-                  session_id: 1ffd059c-17ea-40a8-8aef-70fd0307db82
-                  content:
-                    first: string
-                    second: string
-                    third: string
+            examples: {}
             schema:
               properties:
                 session_id:
@@ -349,24 +342,28 @@ components:
     User:
       properties:
         user_id:
+          format: int64
           type: integer
         name:
           type: string
         subscription:
           items:
+            format: int64
             type: integer
           type: array
         subscribed_by:
           items:
+            format: int64
             type: integer
           type: array
-        posts:
+        haiku_id_list:
           items:
+            format: int64
             type: integer
           type: array
       required:
+      - haiku_id_list
       - name
-      - posts
       - subscribed_by
       - subscription
       - user_id
@@ -389,9 +386,8 @@ components:
           - 3
     Haiku:
       example:
-        author:
-          user_id: 6
         created_at: 5
+        author_id: 6
         haiku_id: 0
         content:
           third: third
@@ -402,8 +398,9 @@ components:
         haiku_id:
           format: int64
           type: integer
-        author:
-          $ref: '#/components/schemas/Haiku_author'
+        author_id:
+          format: int64
+          type: integer
         content:
           $ref: '#/components/schemas/_api_post_haiku_content'
         likes:
@@ -413,7 +410,7 @@ components:
           format: int64
           type: integer
       required:
-      - author
+      - author_id
       - content
       - created_at
       - haiku_id
@@ -565,13 +562,3 @@ components:
       x-examples:
         example-1:
           session_id: hoge
-    Haiku_author:
-      example:
-        user_id: 6
-      properties:
-        user_id:
-          format: int64
-          type: integer
-      required:
-      - user_id
-      type: object

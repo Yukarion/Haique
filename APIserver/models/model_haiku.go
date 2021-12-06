@@ -4,9 +4,9 @@ type Haiku struct {
 
 	HaikuId int64 `json:"haiku_id"`
 
-	Author HaikuAuthor `json:"author"`
+	AuthorId int64 `json:"author_id"`
 
-	Content ApiPostHaikuContent `json:"content"`
+	Content HaikuContent `json:"content"`
 
 	Likes int32 `json:"likes"`
 

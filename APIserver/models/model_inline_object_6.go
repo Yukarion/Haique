@@ -2,5 +2,7 @@ package models
 
 type InlineObject6 struct {
 
-	SessionId string `json:"session_id"`
+	AuthorInfo User `json:"author_info"`
+
+	HaikuInfo Haiku `json:"haiku_info"`
 }
