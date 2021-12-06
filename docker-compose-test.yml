@@ -1,11 +1,10 @@
 version: '3.4'
 services:
-  api-server:
+  test-api-server:
     build:
       context: .
-      dockerfile: ./build/APIserver/dev/Dockerfile
-    container_name: api-server
-    restart: always
+      dockerfile: ./build/APIserver/test/Dockerfile
+    container_name: test-api-server
     ports:
       - 8080:8080
     depends_on:
@@ -20,5 +19,3 @@ services:
     image: redis:latest
     ports:
       - 6379:6379
-    volumes:
-      - "./build/redis/data:/data"
