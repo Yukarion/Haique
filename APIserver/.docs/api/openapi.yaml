@@ -172,6 +172,18 @@ paths:
         "200":
           content:
             application/json:
+              examples:
+                example-1:
+                  value:
+                  - haiku_id: 0
+                    author_id: 0
+                    content:
+                      first: string
+                      second: string
+                      third: string
+                      author_name: string
+                    likes: 0
+                    created_at: 0
               schema:
                 items:
                   $ref: '#/components/schemas/Haiku'
@@ -204,6 +216,7 @@ paths:
           content:
             application/json:
               schema:
+                description: タイムラインでの俳句表示は名前以外のUser情報を載せない
                 items:
                   $ref: '#/components/schemas/Haiku'
                 type: array
@@ -246,7 +259,7 @@ paths:
           type: integer
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/inline_object_7'
+        $ref: '#/components/requestBodies/inline_object_6'
         content:
           application/json:
             schema:
@@ -275,24 +288,12 @@ paths:
           format: int64
           type: integer
         style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_6'
-        content:
-          application/json:
-            schema:
-              properties:
-                session_id:
-                  format: uuid
-                  type: string
-              required:
-              - session_id
-              type: object
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Haiku'
+                $ref: '#/components/schemas/inline_response_200_1'
           description: OK
       summary: get_haiku
       tags: []
@@ -308,11 +309,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/inline_object'
-    inline_object_7:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_7'
     inline_object_6:
       content:
         application/json:
@@ -340,6 +336,18 @@ components:
             $ref: '#/components/schemas/inline_object_2'
   schemas:
     User:
+      example:
+        user_id: 0
+        subscribed_by:
+        - 1
+        - 1
+        name: name
+        subscription:
+        - 6
+        - 6
+        haiku_id_list:
+        - 5
+        - 5
       properties:
         user_id:
           format: int64
@@ -390,6 +398,7 @@ components:
         author_id: 6
         haiku_id: 0
         content:
+          author_name: author_name
           third: third
           first: first
           second: second
@@ -402,7 +411,7 @@ components:
           format: int64
           type: integer
         content:
-          $ref: '#/components/schemas/_api_post_haiku_content'
+          $ref: '#/components/schemas/Haiku_content'
         likes:
           type: integer
         created_at:
@@ -462,10 +471,6 @@ components:
       - pw
       type: object
     _api_post_haiku_content:
-      example:
-        third: third
-        first: first
-        second: second
       properties:
         first:
           minLength: 1
@@ -543,15 +548,37 @@ components:
       - haikus
       - user
       type: object
-    inline_object_6:
+    inline_response_200_1:
+      example:
+        author:
+          user_id: 0
+          subscribed_by:
+          - 1
+          - 1
+          name: name
+          subscription:
+          - 6
+          - 6
+          haiku_id_list:
+          - 5
+          - 5
+        haiku:
+          created_at: 5
+          author_id: 6
+          haiku_id: 0
+          content:
+            author_name: author_name
+            third: third
+            first: first
+            second: second
+          likes: 1
       properties:
-        session_id:
-          format: uuid
-          type: string
-      required:
-      - session_id
+        author:
+          $ref: '#/components/schemas/User'
+        haiku:
+          $ref: '#/components/schemas/Haiku'
       type: object
-    inline_object_7:
+    inline_object_6:
       properties:
         session_id:
           format: uuid
@@ -562,3 +589,27 @@ components:
       x-examples:
         example-1:
           session_id: hoge
+    Haiku_content:
+      example:
+        author_name: author_name
+        third: third
+        first: first
+        second: second
+      properties:
+        first:
+          minLength: 1
+          type: string
+        second:
+          minLength: 1
+          type: string
+        third:
+          minLength: 1
+          type: string
+        author_name:
+          type: string
+      required:
+      - author_name
+      - first
+      - second
+      - third
+      type: object
