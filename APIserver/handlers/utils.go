@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"strings"
-
 	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -34,12 +32,4 @@ func hashPassword(password string, cost int) (string, error) {
 func isValidPassword(hash, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
-}
-
-func eraseSpaceInContent(content models.ApiPostHaikuContent) models.ApiPostHaikuContent {
-	content.First = strings.ReplaceAll(content.First, " ", "")
-	content.Second = strings.ReplaceAll(content.Second, " ", "")
-	content.Third = strings.ReplaceAll(content.Third, " ", "")
-
-	return content
 }

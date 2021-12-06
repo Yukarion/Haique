@@ -18,7 +18,6 @@ func (c *Container) PostHaiku(ctx echo.Context) error {
 	session_id := payload.SessionId
 
 	content := payload.Content
-	content = eraseSpaceInContent(content)
 	if content.First == "" || content.Second == "" || content.Third == "" {
 		return ctx.HTML(http.StatusBadRequest, "containing empty clause")
 	}
