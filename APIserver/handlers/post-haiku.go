@@ -36,7 +36,7 @@ func (c *Container) PostHaiku(ctx echo.Context) error {
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":content", strings.Join([]string{content.First, content.Second, content.Third}, " "), 0)
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":author_id", author_id, 0)
 	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":likes", 0, 0)
-	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":createdAt", current_unix_time, 0)
+	c.RedisClient.Set(ctxBG, "haiku_id:"+haiku_id_str+":created_at", current_unix_time, 0)
 
 	return ctx.NoContent(http.StatusCreated)
 }
