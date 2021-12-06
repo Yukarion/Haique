@@ -205,22 +205,18 @@ paths:
                 session_id:
                   format: uuid
                   type: string
+                start:
+                  description: 最新のhaikuからN番目を起点とする（デフォルト0）
+                  type: integer
+                end:
+                  description: 最新のhaikuからM番目を終点とする（デフォルト30）
+                  type: integer
               required:
               - session_id
               type: object
               x-examples:
                 example-1:
                   session_id: hoge
-          application/xml:
-            schema:
-              properties:
-                start:
-                  description: timelineのN番目のhaikuを起点とする
-                  type: integer
-                end:
-                  description: M番目を終点とする
-                  type: integer
-              type: object
       responses:
         "200":
           content:
@@ -327,9 +323,6 @@ components:
     inline_object_5:
       content:
         application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_5'
-        application/xml:
           schema:
             $ref: '#/components/schemas/inline_object_5'
     inline_object_4:
@@ -552,6 +545,12 @@ components:
         session_id:
           format: uuid
           type: string
+        start:
+          description: 最新のhaikuからN番目を起点とする（デフォルト0）
+          type: integer
+        end:
+          description: 最新のhaikuからM番目を終点とする（デフォルト30）
+          type: integer
       required:
       - session_id
       type: object
@@ -602,6 +601,9 @@ components:
           $ref: '#/components/schemas/User'
         haiku:
           $ref: '#/components/schemas/Haiku'
+      required:
+      - author
+      - haiku
       type: object
     inline_object_6:
       properties:
