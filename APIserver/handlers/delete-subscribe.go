@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/labstack/echo/v4"
@@ -22,11 +23,13 @@ func (c *Container) DeleteSubscribe(ctx echo.Context) error {
 	}
 	receiver_id_str := ctx.Param("user_id")
 
-	_, err = c.RedisClient.SRem(ctxBG, "user_id:"+subscriber_id_str+"subscription", receiver_id_str).Result()
+	receiver_id, _ := strconv.Atoi(receiver_id_str)
+	subscriber_id, _ := strconv.Atoi(subscriber_id_str)
+	_, err = c.RedisClient.SRem(ctxBG, "user_id:"+subscriber_id_str+":subscription", receiver_id).Result()
 	if err != nil {
 		return err
 	}
-	_, err = c.RedisClient.SRem(ctxBG, "user_id:"+receiver_id_str+"subscription", subscriber_id_str).Result()
+	_, err = c.RedisClient.SRem(ctxBG, "user_id:"+receiver_id_str+":subscribed_by", subscriber_id).Result()
 	if err != nil {
 		return err
 	}

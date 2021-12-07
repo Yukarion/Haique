@@ -12,21 +12,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func signupUsersForTest(users []models.InlineObject) {
-	e := echo.New()
-	c, _ := NewContainerForTest(genUUIDForTest)
-	for _, user := range users {
-		inputJson, _ := json.Marshal(user)
-		req := httptest.NewRequest(http.MethodPost, "/api/signup", strings.NewReader(string(inputJson)))
-		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-		rec := httptest.NewRecorder()
-		ctx := e.NewContext(req, rec)
-		c.PostSignup(ctx)
-	}
-}
-
-var users []models.InlineObject
-
 func TestSignin(t *testing.T) {
 	e := echo.New()
 	c, _ := NewContainerForTest(genUUIDForTest)
