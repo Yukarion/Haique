@@ -24,10 +24,6 @@ func (c *Container) PostSignup(ctx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	session_id, err := c.UUIDgenerator()
-	if err != nil {
-		return err
-	}
 	/*
 		{session_id}:linked_user_id -> {user_id}
 		{name}:pw -> {pw}
@@ -40,6 +36,10 @@ func (c *Container) PostSignup(ctx echo.Context) error {
 	if !isNameUnique {
 		// 登録済みのuser名は不可
 		return ctx.NoContent(http.StatusConflict)
+	}
+	session_id, err := c.UUIDgenerator()
+	if err != nil {
+		return err
 	}
 	//pwは上でsetされていることに注意
 	user_id, err := c.RedisClient.Incr(ctxBG, "global:next_user_id").Result()
