@@ -47,7 +47,7 @@ func (c *Container) PostHaiku(ctx echo.Context) error {
 
 	c.RedisClient.SAdd(ctxBG, "user_id:"+author_id_str+":author_haiku_id_list", haiku_id)
 
-	subscriber_id_str_list, err := c.RedisClient.SMembers(ctxBG, "user_id:"+author_id_str+":subscribed").Result()
+	subscriber_id_str_list, err := c.RedisClient.SMembers(ctxBG, "user_id:"+author_id_str+":subscribed_by").Result()
 	for _, subscriber_id_str := range subscriber_id_str_list {
 		c.RedisClient.LPush(ctxBG, "user_id:"+subscriber_id_str+":timeline_haiku_id_list", haiku_id)
 	}

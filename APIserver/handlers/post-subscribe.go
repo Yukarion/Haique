@@ -26,7 +26,7 @@ func (c *Container) PostSubscribe(ctx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	_, err = c.RedisClient.SAdd(ctxBG, "user_id:"+receiver_id_str+"subscription", subscriber_id_str).Result()
+	_, err = c.RedisClient.SAdd(ctxBG, "user_id:"+receiver_id_str+"subscribed_by", subscriber_id_str).Result()
 	if err != nil {
 		return err
 	}
