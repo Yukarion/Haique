@@ -18,7 +18,7 @@ func TestPostSubscribe(t *testing.T) {
 	c, _ := NewContainerForTest(genUUIDForTest)
 	c.RedisClient.Set(ctxBG, "global:next_user_id", 0, 0) //テスト用ユーザーID設定
 	session_id_cnt = 0                                    //テスト用session_id設定
-	users = []models.InlineObject{{Name: "subscribe_first", Pw: "test"}, {Name: "subscribe_second", Pw: "test"}}
+	users = []models.InlineObject{{Name: "post-subscribe_first", Pw: "test"}, {Name: "post-subscribe_second", Pw: "test"}}
 	signupUsersForTest(users) //テスト用ユーザーの登録
 	tests := []struct {
 		title         string
@@ -45,7 +45,7 @@ func TestPostSubscribe(t *testing.T) {
 			expected_code: http.StatusBadRequest,
 		},
 		{
-			title:         "Subscribe unregistered user_id",
+			title:         "Subscribe Unregistered User",
 			input:         models.SessionId{SessionId: "1"},
 			path_param:    "100000",
 			expected_code: http.StatusBadRequest,

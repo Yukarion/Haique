@@ -20,7 +20,7 @@ func TestGetTimeline(t *testing.T) {
 	c.RedisClient.Set(ctxBG, "global:next_user_id", 0, 0)  //テスト用ユーザーID設定
 	c.RedisClient.Set(ctxBG, "global:next_haiku_id", 0, 0) //テスト用haiku_id設定
 	session_id_cnt = 0                                     //テスト用session_id設定
-	users = []models.InlineObject{{Name: "get-top_first", Pw: "test"}, {Name: "get-top_second", Pw: "test"}}
+	users = []models.InlineObject{{Name: "get-timeline_first", Pw: "test"}, {Name: "get-timeline_second", Pw: "test"}}
 	signupUsersForTest(users) //テスト用ユーザーの登録
 	haiku_list = []models.InlineObject2{
 		{
@@ -77,9 +77,10 @@ func TestGetTimeline(t *testing.T) {
 					HaikuId:  2,
 					AuthorId: 2,
 					Content: models.HaikuContent{
-						First:  "d",
-						Second: "e",
-						Third:  "f",
+						First:      "d",
+						Second:     "e",
+						Third:      "f",
+						AuthorName: "get-timeline_first",
 					},
 					Likes: 0,
 					//timestampまわりのテストはコスパが悪すぎるので省略
@@ -88,9 +89,10 @@ func TestGetTimeline(t *testing.T) {
 					HaikuId:  1,
 					AuthorId: 1,
 					Content: models.HaikuContent{
-						First:  "a",
-						Second: "b",
-						Third:  "c",
+						First:      "a",
+						Second:     "b",
+						Third:      "c",
+						AuthorName: "get-timeline_second",
 					},
 					Likes: 0,
 					//timestampまわりのテストはコスパが悪すぎるので省略

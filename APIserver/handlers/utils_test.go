@@ -12,6 +12,7 @@ import (
 )
 
 //utils.goのテストではなくテスト用のUtilityをここに置く。
+//末尾が_testだとビルド時には含まれないらしいからこういう名前にした
 var (
 	haiku_list []models.InlineObject2
 	users      []models.InlineObject
