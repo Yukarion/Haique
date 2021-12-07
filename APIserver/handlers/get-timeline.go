@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"sort"
 	"strconv"
 
 	"github.com/Mackyson/Haique/APIserver/models"
@@ -10,7 +9,7 @@ import (
 )
 
 // GetTimeline - timeline
-/*func (c *Container) GetTimeline(ctx echo.Context) error {
+func (c *Container) GetTimeline(ctx echo.Context) error {
 	var payload models.InlineObject5
 	if err := (&echo.DefaultBinder{}).BindBody(ctx, &payload); err != nil {
 		return err
@@ -53,8 +52,9 @@ import (
 		haiku_list = append(haiku_list, tmp_haiku)
 	}
 	return ctx.JSON(http.StatusOK, haiku_list)
-}*/
+}
 
+/*
 //あわれな旧実装くんを戒めとして残しておく。
 func (c *Container) GetTimeline(ctx echo.Context) error {
 	var payload models.InlineObject5
@@ -109,3 +109,4 @@ func (c *Container) GetTimeline(ctx echo.Context) error {
 	}
 	return ctx.JSON(http.StatusOK, haiku_list[start:stop])
 }
+*/

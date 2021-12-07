@@ -22,6 +22,25 @@ func TestGetTimeline(t *testing.T) {
 	session_id_cnt = 0                                     //テスト用session_id設定
 	users = []models.InlineObject{{Name: "get-timeline_first", Pw: "test"}, {Name: "get-timeline_second", Pw: "test"}}
 	signupUsersForTest(users) //テスト用ユーザーの登録
+	subscribe_pair := []pair{
+		{
+			subscriber_session_id: models.SessionId{SessionId: "1"},
+			receiver_user_id:      2,
+		},
+		{
+			subscriber_session_id: models.SessionId{SessionId: "2"},
+			receiver_user_id:      1,
+		},
+	}
+	subscribeUserForTest(subscribe_pair)
+	log.Println(c.RedisClient.SMembers(ctxBG, "user_id:1:subscription").Result())
+	delete_subscribe_pair := []pair{
+		{
+			subscriber_session_id: models.SessionId{SessionId: "2"},
+			receiver_user_id:      1,
+		},
+	}
+	deleteSubscribeUserForTest(delete_subscribe_pair)
 	haiku_list = []models.InlineObject2{
 		{
 			SessionId: "1",
@@ -49,25 +68,6 @@ func TestGetTimeline(t *testing.T) {
 		},
 	}
 	postHaikusForTest(haiku_list)
-	subscribe_pair := []pair{
-		{
-			subscriber_session_id: models.SessionId{SessionId: "1"},
-			receiver_user_id:      2,
-		},
-		{
-			subscriber_session_id: models.SessionId{SessionId: "2"},
-			receiver_user_id:      1,
-		},
-	}
-	subscribeUserForTest(subscribe_pair)
-	log.Println(c.RedisClient.SMembers(ctxBG, "user_id:1:subscription").Result())
-	delete_subscribe_pair := []pair{
-		{
-			subscriber_session_id: models.SessionId{SessionId: "2"},
-			receiver_user_id:      1,
-		},
-	}
-	deleteSubscribeUserForTest(delete_subscribe_pair)
 
 	tests := []struct {
 		title             string
