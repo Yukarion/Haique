@@ -103,7 +103,7 @@ func (c *Container) GetTimeline(ctx echo.Context) error {
 			haiku_list = append(haiku_list, tmp_haiku)
 		}
 	}
-	sort.Slice(haiku_list, func(i, j int) bool { return haiku_list[i].CreatedAt > haiku_list[j].CreatedAt })
+	sort.SliceStable(haiku_list, func(i, j int) bool { return haiku_list[i].CreatedAt > haiku_list[j].CreatedAt })
 	if len(haiku_list) < int(stop) {
 		stop = int64(len(haiku_list))
 	}
