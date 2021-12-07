@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -40,8 +39,6 @@ func (c *Container) PostSignup(ctx echo.Context) error {
 	}
 	if !isNameUnique {
 		// 登録済みのuser名は不可
-		tmp, err := c.RedisClient.Get(ctxBG, name+":pw").Result()
-		log.Println(name, tmp, err)
 		return ctx.NoContent(http.StatusConflict)
 	}
 	//pwは上でsetされていることに注意

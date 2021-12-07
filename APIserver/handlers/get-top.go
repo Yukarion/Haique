@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -17,7 +16,6 @@ func (c *Container) GetTop(ctx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	log.Println(haiku_id_list)
 	for _, haiku_id_str := range haiku_id_list {
 		if haiku_id_str == "-1" {
 			break

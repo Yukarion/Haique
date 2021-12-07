@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -29,7 +28,6 @@ func (c *Container) GetTimeline(ctx echo.Context) error {
 	}
 	var haiku_list []models.Haiku
 	haiku_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":timeline_haiku_id_list", start, stop).Result()
-	log.Println(haiku_id_str_list)
 	for _, haiku_id_str := range haiku_id_str_list {
 
 		var tmp_haiku models.Haiku

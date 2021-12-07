@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/Mackyson/Haique/APIserver/models"
@@ -28,7 +27,6 @@ func (c *Container) PostSignin(ctx echo.Context) error {
 	if isValidPassword(hashedPw, rawPw) {
 		userId, err := c.RedisClient.Get(ctxBG, name+":user_id").Result()
 		if err != nil {
-			log.Println(name, err)
 			return err
 		}
 		session_id, err := c.UUIDgenerator()
