@@ -39,6 +39,14 @@ func TestGetTimeline(t *testing.T) {
 				Third:  "f",
 			},
 		},
+		{
+			SessionId: "1",
+			Content: models.ApiPostHaikuContent{
+				First:  "g",
+				Second: "h",
+				Third:  "i",
+			},
+		},
 	}
 	postHaikusForTest(haiku_list)
 	subscribe_pair := []pair{
@@ -72,7 +80,18 @@ func TestGetTimeline(t *testing.T) {
 			input:         models.InlineObject5{SessionId: "1"},
 			expected_code: http.StatusOK,
 			expected_response: []models.Haiku{
-				//後にPOSTされた方が上位に出ることに注意
+				{
+					HaikuId:  3,
+					AuthorId: 1,
+					Content: models.HaikuContent{
+						First:      "g",
+						Second:     "h",
+						Third:      "i",
+						AuthorName: "get-timeline_first",
+					},
+					Likes: 0,
+					//timestampまわりのテストはコスパが悪すぎるので省略
+				},
 				{
 					HaikuId:  2,
 					AuthorId: 2,
@@ -80,7 +99,7 @@ func TestGetTimeline(t *testing.T) {
 						First:      "d",
 						Second:     "e",
 						Third:      "f",
-						AuthorName: "get-timeline_first",
+						AuthorName: "get-timeline_second",
 					},
 					Likes: 0,
 					//timestampまわりのテストはコスパが悪すぎるので省略
@@ -92,7 +111,7 @@ func TestGetTimeline(t *testing.T) {
 						First:      "a",
 						Second:     "b",
 						Third:      "c",
-						AuthorName: "get-timeline_second",
+						AuthorName: "get-timeline_first",
 					},
 					Likes: 0,
 					//timestampまわりのテストはコスパが悪すぎるので省略
@@ -139,6 +158,10 @@ func TestGetTimeline(t *testing.T) {
 				json.Unmarshal(rec.Body.Bytes(), &actual)
 				assert.Equal(t, test.expected_code, rec.Code)
 				assert.Equal(t, len(test.expected_response), len(actual))
+				for i := 0; i < len(test.expected_response); i++ {
+					log.Println(actual[i].CreatedAt)
+					assert.Equal(t, test.expected_response[i].HaikuId, actual[i].HaikuId)
+				}
 			}
 		})
 	}

@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/labstack/echo/v4"
@@ -42,6 +43,7 @@ func postHaikusForTest(haiku_list []models.InlineObject2) {
 		rec := httptest.NewRecorder()
 		ctx := e.NewContext(req, rec)
 		ctx.SetPath("/api/post-haiku")
+		time.Sleep(100 * time.Millisecond)
 		c.PostHaiku(ctx)
 	}
 }
