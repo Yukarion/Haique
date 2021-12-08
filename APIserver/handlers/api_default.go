@@ -17,17 +17,3 @@ func (c *Container) DeleteHaiku(ctx echo.Context) error {
 		Message: "Hello World",
 	})
 }
-
-// GetHaiku - get_haiku
-func (c *Container) GetHaiku(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, models.HelloWorld{
-		Message: "Hello World",
-	})
-}
-
-// GetUser - user_info
-func (c *Container) GetUser(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, models.HelloWorld{
-		Message: "Hello World",
-	})
-}
