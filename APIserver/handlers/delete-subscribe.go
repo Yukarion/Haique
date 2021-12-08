@@ -25,13 +25,13 @@ func (c *Container) DeleteSubscribe(ctx echo.Context) error {
 
 	//自分のsubscribeは弾く
 	if subscriber_id_str == receiver_id_str {
-		return ctx.HTML(http.StatusBadRequest, "invalid session id")
+		return ctx.HTML(http.StatusBadRequest, "cannot subscribe myself")
 	}
 
 	//存在しないuser_idへのリクエストも弾く
 	_, err = c.RedisClient.Get(ctxBG, "user_id:"+receiver_id_str+":name").Result()
 	if err != nil {
-		return ctx.HTML(http.StatusBadRequest, "invalid session id")
+		return ctx.HTML(http.StatusBadRequest, "invalid user id")
 	}
 
 	receiver_id, _ := strconv.Atoi(receiver_id_str)
