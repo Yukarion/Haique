@@ -17,7 +17,11 @@ func (c *Container) GetUser(ctx echo.Context) error {
 	user_id, _ := strconv.Atoi(user_id_str)
 	tmp_res.User.UserId = int64(user_id)
 
-	tmp_res.User.Name, _ = c.RedisClient.Get(ctxBG, "user_id:"+user_id_str+":name").Result()
+	name, err := c.RedisClient.Get(ctxBG, "user_id:"+user_id_str+":name").Result()
+	if err != nil {
+		return ctx.HTML(http.StatusBadRequest, "invalid user id")
+	}
+	tmp_res.User.Name = name
 
 	subscription_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":subscription", 0, -1).Result()
 	for _, subscription_id_str := range subscription_id_str_list {
