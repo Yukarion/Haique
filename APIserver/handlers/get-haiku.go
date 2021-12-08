@@ -11,11 +11,11 @@ import (
 // GetHaiku - get_haiku
 func (c *Container) GetHaiku(ctx echo.Context) error {
 
-	var tmp_res models.InlineResponce2001
+	var tmp_res models.InlineResponse2001
 
 	haiku_id_str := ctx.Param("haiku_id")
 	haiku_id, _ := strconv.Atoi(haiku_id_str)
-	tmp_res.Haiku.HaikuId = int64(id)
+	tmp_res.Haiku.HaikuId = int64(haiku_id)
 
 	author_id_str, err := c.RedisClient.Get(ctxBG, "haiku_id:"+haiku_id_str+":author_id").Result()
 	if err != nil {
@@ -35,39 +35,31 @@ func (c *Container) GetHaiku(ctx echo.Context) error {
 	created_at, _ := strconv.Atoi(created_at_str)
 	tmp_res.Haiku.CreatedAt = int64(created_at)
 
-	tmp_res.Author.Name = c.RedisClient.Get(ctxBG, "user_id:"+author_id_str+":name").Result()
+	tmp_res.Author.Name, _ = c.RedisClient.Get(ctxBG, "user_id:"+author_id_str+":name").Result()
 
-	subscription_id_str_list := c.RedisClient.Get(ctxBG, "user_id:"+author_id_str+":subscription").Result()
-	var tmp_sub_id_list []int
+	subscription_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+author_id_str+":subscription", 0, -1).Result()
 	for _, subscription_id_str := range subscription_id_str_list {
 		subscription_id, _ := strconv.Atoi(subscription_id_str)
-		tmp_sub_id_list = append(temp_sub_id_list, int64(subscription_id))
+		tmp_res.Author.Subscription = append(tmp_res.Author.Subscription, int64(subscription_id))
 	}
-	tmp_res.Author.Subscription = temp_sub_id_list
 
-	subscribed_by_id_str_list := c.RedisClient.Get(ctxBG, "user_id:"+author_id_str+":subscribed_by").Result()
-	var tmp_subscribed_by_id_list []int
+	subscribed_by_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+author_id_str+":subscribed_by", 0, -1).Result()
 	for _, subscribed_by_id_str := range subscribed_by_id_str_list {
 		subscribed_by_id, _ := strconv.Atoi(subscribed_by_id_str)
-		tmp_subscribed_by_id_list = append(temp_subscribed_by_id_list, int64(subscribed_by_id))
+		tmp_res.Author.SubscribedBy = append(tmp_res.Author.SubscribedBy, int64(subscribed_by_id))
 	}
-	tmp_res.Author.SubscribedBy = tmp_subscribed_by_id_list
 
-	author_haiku_id_str_list := c.RedisClient.Get(ctxBG, "user_id:"+author_id_str+":haiku_id_list").Result()
-	var tmp_haiku_id_list []int
+	author_haiku_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+author_id_str+":haiku_id_list", 0, -1).Result()
 	for _, author_haiku_id_str := range author_haiku_id_str_list {
 		author_haiku_id, _ := strconv.Atoi(author_haiku_id_str)
-		tmp_haiku_id_list = append(temp_haiku_id_list, int64(author_haiku_id))
+		tmp_res.Author.AuthorHaikuIdList = append(tmp_res.Author.AuthorHaikuIdList, int64(author_haiku_id))
 	}
-	tmp_res.Author.AuthorHaikuIdList = tmp_haiku_id_list
 
-	timeline_haiku_id_str_list := c.RedisClient.Get(ctxBG, "user_id:"+author_id_str+":timeline_haiku_id_list").Result()
-	var tmp_timeline_id_list []int
+	timeline_haiku_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+author_id_str+":timeline_haiku_id_list", 0, -1).Result()
 	for _, timeline_haiku_id_str := range timeline_haiku_id_str_list {
 		timeline_haiku_id, _ := strconv.Atoi(timeline_haiku_id_str)
-		tmp_timeline_id_list = append(temp_timeline_id_list, int64(timeline_haiku_id))
+		tmp_res.Author.TimelineHaikuIdList = append(tmp_res.Author.TimelineHaikuIdList, int64(timeline_haiku_id))
 	}
-	tmp_res.Author.TimelineHaikuIdList = temp_timeline_id_list
 
 	return ctx.JSON(http.StatusOK, tmp_res)
 }
