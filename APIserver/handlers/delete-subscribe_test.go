@@ -12,14 +12,26 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPostSubscribe(t *testing.T) {
+func TestDeleteSubscribe(t *testing.T) {
 
 	e := echo.New()
 	c, _ := NewContainerForTest(genUUIDForTest)
 	c.RedisClient.Set(ctxBG, "global:next_user_id", 0, 0) //テスト用ユーザーID設定
 	session_id_cnt = 0                                    //テスト用session_id設定
-	users = []models.InlineObject{{Name: "post-subscribe_first", Pw: "test"}, {Name: "post-subscribe_second", Pw: "test"}}
+	users = []models.InlineObject{{Name: "delete-subscribe_first", Pw: "test"}, {Name: "delete-subscribe_second", Pw: "test"}}
 	signupUsersForTest(users) //テスト用ユーザーの登録
+	subscribe_pair := []pair{
+		{
+			subscriber_session_id: models.SessionId{SessionId: "1"},
+			receiver_user_id:      2,
+		},
+		{
+			subscriber_session_id: models.SessionId{SessionId: "2"},
+			receiver_user_id:      1,
+		},
+	}
+	subscribeUserForTest(subscribe_pair)
+
 	tests := []struct {
 		title         string
 		input         models.SessionId
@@ -27,25 +39,25 @@ func TestPostSubscribe(t *testing.T) {
 		expected_code int
 	}{
 		{
-			title:         "First User Subscribes Second User",
+			title:         "First User Remove Second User",
 			input:         models.SessionId{SessionId: "1"},
 			path_param:    "2",
 			expected_code: http.StatusOK,
 		},
 		{
-			title:         "Subscribe with wrong session_id",
-			input:         models.SessionId{SessionId: "WRONG"},
+			title:         "First User Remove Second User Twice",
+			input:         models.SessionId{SessionId: "1"},
 			path_param:    "2",
-			expected_code: http.StatusBadRequest,
+			expected_code: http.StatusOK, //DELETEの冪等性に注意
 		},
 		{
-			title:         "Subscribe myself",
+			title:         "Remove myself",
 			input:         models.SessionId{SessionId: "1"},
 			path_param:    "1",
 			expected_code: http.StatusBadRequest,
 		},
 		{
-			title:         "Subscribe Unregistered User",
+			title:         "Remove Unregistered User",
 			input:         models.SessionId{SessionId: "1"},
 			path_param:    "100000",
 			expected_code: http.StatusBadRequest,
@@ -55,7 +67,7 @@ func TestPostSubscribe(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.title, func(t *testing.T) {
 			inputJson, _ := json.Marshal(test.input)
-			req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(string(inputJson)))
+			req := httptest.NewRequest(http.MethodDelete, "/", strings.NewReader(string(inputJson)))
 			req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 			rec := httptest.NewRecorder()
 			ctx := e.NewContext(req, rec)
@@ -63,7 +75,7 @@ func TestPostSubscribe(t *testing.T) {
 			ctx.SetParamNames("user_id")
 			ctx.SetParamValues(test.path_param)
 
-			if assert.NoError(t, c.PostSubscribe(ctx)) {
+			if assert.NoError(t, c.DeleteSubscribe(ctx)) {
 				assert.Equal(t, test.expected_code, rec.Code)
 			}
 		})
