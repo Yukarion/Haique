@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests
 
 app = Flask(__name__)
@@ -14,4 +14,8 @@ def get_top():
 
     r = requests.get(url)
     print(r.json())
-    return "<p>Top 30 Get sucsessfully!</p>"
+    return render_template('top.html',title='top_30Haiku', Haikus=r.json())
+
+## おまじない
+if __name__ == "__main__":
+    app.run(debug=True)
