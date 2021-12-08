@@ -22,13 +22,14 @@ func (c *Container) PostSubscribe(ctx echo.Context) error {
 		return ctx.HTML(http.StatusBadRequest, "invalid session id")
 	}
 	receiver_id_str := ctx.Param("user_id")
+
 	//自分のsubscribeは弾く
 	if subscriber_id_str == receiver_id_str {
 		return ctx.HTML(http.StatusBadRequest, "invalid session id")
 	}
 
 	//存在しないuser_idへのリクエストも弾く
-	_, err = c.RedisClient.Get(ctxBG, receiver_id_str+":name").Result()
+	_, err = c.RedisClient.Get(ctxBG, "user_id:"+receiver_id_str+":name").Result()
 	if err != nil {
 		return ctx.HTML(http.StatusBadRequest, "invalid session id")
 	}
