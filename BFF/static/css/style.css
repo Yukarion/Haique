@@ -1,0 +1,9 @@
+.navigator{
+	padding:0;
+	display:flex;
+	color:#666666;
+}
+.navigator-child{
+	list-style-type: none;
+	margin-left: 0.5em;
+}

@@ -2,8 +2,18 @@
 <html>
   <head>
     <title>{{ title }}</title>
+    <link rel="stylesheet" href="static/css/style.css">
   </head>
   <body>
+    <nav>
+      <ul class="navigator">
+        <li class="navigator-child"><a href="/top">top</a></li>
+        <li class="navigator-child"><a href="/signup">sign up</a></li>
+        <li class="navigator-child"><a href="/signin">sign in</a></li>
+        <li class="navigator-child"><a href="/post-haiku">post haiku</a></li>
+        <li class="navigator-child"><a href="/timeline">timeline</a></li>
+      </ul>
+    </nav>
   {% block content %}
     <!-- ここにメインコンテンツを書く -->
   {% endblock %}

@@ -15,9 +15,6 @@ configuration = openapi_client.Configuration(
 )
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello,World!</p>"
-
 @app.route("/top")
 def get_top():
     with openapi_client.ApiClient(configuration=configuration) as api_client:
@@ -53,8 +50,6 @@ def post_signup():
         # and optional values
         try:
             api_response = api_instance.post_signup(inline_object=inline_object)
-            print(api_response)
-            print(type(api_response))
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->post_signup: %s\n" % e)
             return render_template('signup.html',title='signup',err="Already used name...")
@@ -84,7 +79,38 @@ def post_signin():
             return render_template('signin.html',title='signup',err="Wrong password or name")
         resp = make_response(render_template('signup_done.html',title='signup'))
         resp.set_cookie("session_id",api_response.session_id)
-        return resp 
+        return resp
+@app.route("/post-haiku")
+def get_post_haiku(): #地獄みたいな名前だが、post-haikuへのGETリクエストを捌くところです
+    return render_template('post-haiku.html',title='post haiku',err="")
+@app.route("/post-haiku",methods=["POST"])
+def post_post_haiku():
+    with openapi_client.ApiClient(configuration=configuration) as api_client:
+        first=request.form.get("first")
+        second=request.form.get("second")
+        third=request.form.get("third")
+        if  first=="" or second=="" or third=="" :
+            return render_template('post-haiku.html',title='post haiku',err="Empty inputs are not allowed")
+
+        # Create an instance of the API class
+        api_instance = default_api.DefaultApi(api_client)
+        inline_object2 = InlineObject2(
+            session_id=request.cookies.get("session_id"),
+            content=ApiPostHaikuContent(
+                first=first,
+                second=second,
+                third=third,
+            ),
+        ) # InlineObject2 |  (optional)
+
+        # example passing only required values which don't have defaults set
+        # and optional values
+        try:
+            api_instance.post_haiku(inline_object2=inline_object2)
+        except openapi_client.ApiException as e:
+            print("Exception when calling DefaultApi->post_haiku: %s\n" % e)
+            return render_template('session_error.html',title='session error')
+        return render_template('post-haiku_done.html',title='post haiku')
 
 ## おまじない
 if __name__ == "__main__":
