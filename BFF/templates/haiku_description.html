@@ -2,9 +2,9 @@
 {% block content %}
 <h3>Haiku description</h3>
 <ul>
-  <li>{{Haiku.content.first}}</li>
-  <li>{{Haiku.content.second}}</li>
-  <li>{{Haiku.content.third}}</li>
-  <li>--<a href={ "./api/user/"+haiku.author_id}>{{haiku.content.author_name}}</a></li>
+  <li>{{Haiku.haiku.content.first}}</li>
+  <li>{{Haiku.haiku.content.second}}</li>
+  <li>{{Haiku.haiku.content.third}}</li>
+  <li>--<a href="/api/user/{{Haiku.author.user_id}}">{{Haiku.author.name}}</a></li>
 </ul>
 {% endblock %}
