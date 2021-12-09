@@ -298,7 +298,7 @@ paths:
       operationId: get-user
       description: ユーザー情報
       parameters: []
-  '/api/{haiku_id}':
+  '/api/haiku/{haiku_id}':
     parameters:
       - schema:
           type: integer

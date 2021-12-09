@@ -49,7 +49,7 @@ class DefaultApi(object):
             settings={
                 'response_type': None,
                 'auth': [],
-                'endpoint_path': '/api/{haiku_id}',
+                'endpoint_path': '/api/haiku/{haiku_id}',
                 'operation_id': 'delete_haiku',
                 'http_method': 'DELETE',
                 'servers': None,
@@ -155,7 +155,7 @@ class DefaultApi(object):
             settings={
                 'response_type': (InlineResponse2001,),
                 'auth': [],
-                'endpoint_path': '/api/{haiku_id}',
+                'endpoint_path': '/api/haiku/{haiku_id}',
                 'operation_id': 'get_haiku',
                 'http_method': 'GET',
                 'servers': None,

@@ -253,7 +253,7 @@ paths:
           description: OK
       summary: user_info
       tags: []
-  /api/{haiku_id}:
+  /api/haiku/{haiku_id}:
     delete:
       description: haikuを削除
       operationId: delete-haiku

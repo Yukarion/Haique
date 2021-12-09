@@ -90,9 +90,9 @@ All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**delete_haiku**](docs/DefaultApi.md#delete_haiku) | **DELETE** /api/{haiku_id} | 
+*DefaultApi* | [**delete_haiku**](docs/DefaultApi.md#delete_haiku) | **DELETE** /api/haiku/{haiku_id} | 
 *DefaultApi* | [**delete_subscribe**](docs/DefaultApi.md#delete_subscribe) | **DELETE** /api/subscribe/{user_id} | 
-*DefaultApi* | [**get_haiku**](docs/DefaultApi.md#get_haiku) | **GET** /api/{haiku_id} | get_haiku
+*DefaultApi* | [**get_haiku**](docs/DefaultApi.md#get_haiku) | **GET** /api/haiku/{haiku_id} | get_haiku
 *DefaultApi* | [**get_timeline**](docs/DefaultApi.md#get_timeline) | **GET** /api/timeline | timeline
 *DefaultApi* | [**get_top**](docs/DefaultApi.md#get_top) | **GET** /api/top | top
 *DefaultApi* | [**get_user**](docs/DefaultApi.md#get_user) | **GET** /api/users/{user_id} | user_info

@@ -4,9 +4,9 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_haiku**](DefaultApi.md#delete_haiku) | **DELETE** /api/{haiku_id} | 
+[**delete_haiku**](DefaultApi.md#delete_haiku) | **DELETE** /api/haiku/{haiku_id} | 
 [**delete_subscribe**](DefaultApi.md#delete_subscribe) | **DELETE** /api/subscribe/{user_id} | 
-[**get_haiku**](DefaultApi.md#get_haiku) | **GET** /api/{haiku_id} | get_haiku
+[**get_haiku**](DefaultApi.md#get_haiku) | **GET** /api/haiku/{haiku_id} | get_haiku
 [**get_timeline**](DefaultApi.md#get_timeline) | **GET** /api/timeline | timeline
 [**get_top**](DefaultApi.md#get_top) | **GET** /api/top | top
 [**get_user**](DefaultApi.md#get_user) | **GET** /api/users/{user_id} | user_info
