@@ -32,8 +32,13 @@ func TestGetTimeline(t *testing.T) {
 			receiver_user_id:      1,
 		},
 	}
+	isTimelineEmpty := false
+	for !isTimelineEmpty {
+		_, err1 := c.RedisClient.LPop(ctxBG, "user_id:1:timeline_haiku_id_list").Result()
+		_, err2 := c.RedisClient.LPop(ctxBG, "user_id:2:timeline_haiku_id_list").Result()
+		isTimelineEmpty = err1 != nil && err2 != nil
+	}
 	subscribeUserForTest(subscribe_pair)
-	log.Println(c.RedisClient.SMembers(ctxBG, "user_id:1:subscription").Result())
 	delete_subscribe_pair := []pair{
 		{
 			subscriber_session_id: models.SessionId{SessionId: "2"},
