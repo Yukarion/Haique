@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_api_haiku_id**](DefaultApi.md#delete_api_haiku_id) | **DELETE** /api/{haiku_id} | 
-[**delete_api_subscribe_user_id**](DefaultApi.md#delete_api_subscribe_user_id) | **DELETE** /api/subscribe/{user_id} | 
-[**get_api_haiku_id**](DefaultApi.md#get_api_haiku_id) | **GET** /api/{haiku_id} | get_haiku
-[**get_api_timeline**](DefaultApi.md#get_api_timeline) | **GET** /api/timeline | timeline
-[**get_api_user**](DefaultApi.md#get_api_user) | **GET** /api/users/{user_id} | user_info
+[**delete_haiku**](DefaultApi.md#delete_haiku) | **DELETE** /api/{haiku_id} | 
+[**delete_subscribe**](DefaultApi.md#delete_subscribe) | **DELETE** /api/subscribe/{user_id} | 
+[**get_haiku**](DefaultApi.md#get_haiku) | **GET** /api/{haiku_id} | get_haiku
+[**get_timeline**](DefaultApi.md#get_timeline) | **GET** /api/timeline | timeline
 [**get_top**](DefaultApi.md#get_top) | **GET** /api/top | top
-[**post_api_signup**](DefaultApi.md#post_api_signup) | **POST** /api/signup | 
+[**get_user**](DefaultApi.md#get_user) | **GET** /api/users/{user_id} | user_info
 [**post_haiku**](DefaultApi.md#post_haiku) | **POST** /api/post-haiku | 
 [**post_signin**](DefaultApi.md#post_signin) | **POST** /api/signin | 
+[**post_signup**](DefaultApi.md#post_signup) | **POST** /api/signup | 
 [**post_subscribe**](DefaultApi.md#post_subscribe) | **POST** /api/subscribe/{user_id} | 
 
 
-# **delete_api_haiku_id**
-> delete_api_haiku_id(haiku_id)
+# **delete_haiku**
+> delete_haiku(haiku_id)
 
 
 
@@ -50,16 +50,16 @@ with openapi_client.ApiClient() as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.delete_api_haiku_id(haiku_id)
+        api_instance.delete_haiku(haiku_id)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->delete_api_haiku_id: %s\n" % e)
+        print("Exception when calling DefaultApi->delete_haiku: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.delete_api_haiku_id(haiku_id, inline_object6=inline_object6)
+        api_instance.delete_haiku(haiku_id, inline_object6=inline_object6)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->delete_api_haiku_id: %s\n" % e)
+        print("Exception when calling DefaultApi->delete_haiku: %s\n" % e)
 ```
 
 
@@ -92,8 +92,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_api_subscribe_user_id**
-> delete_api_subscribe_user_id(user_id)
+# **delete_subscribe**
+> delete_subscribe(user_id)
 
 
 
@@ -126,16 +126,16 @@ with openapi_client.ApiClient() as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_instance.delete_api_subscribe_user_id(user_id)
+        api_instance.delete_subscribe(user_id)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->delete_api_subscribe_user_id: %s\n" % e)
+        print("Exception when calling DefaultApi->delete_subscribe: %s\n" % e)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
-        api_instance.delete_api_subscribe_user_id(user_id, inline_object4=inline_object4)
+        api_instance.delete_subscribe(user_id, inline_object4=inline_object4)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->delete_api_subscribe_user_id: %s\n" % e)
+        print("Exception when calling DefaultApi->delete_subscribe: %s\n" % e)
 ```
 
 
@@ -168,8 +168,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_api_haiku_id**
-> InlineResponse2001 get_api_haiku_id(haiku_id)
+# **get_haiku**
+> InlineResponse2001 get_haiku(haiku_id)
 
 get_haiku
 
@@ -200,10 +200,10 @@ with openapi_client.ApiClient() as api_client:
     # example passing only required values which don't have defaults set
     try:
         # get_haiku
-        api_response = api_instance.get_api_haiku_id(haiku_id)
+        api_response = api_instance.get_haiku(haiku_id)
         pprint(api_response)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->get_api_haiku_id: %s\n" % e)
+        print("Exception when calling DefaultApi->get_haiku: %s\n" % e)
 ```
 
 
@@ -235,8 +235,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_api_timeline**
-> [Haiku] get_api_timeline()
+# **get_timeline**
+> [Haiku] get_timeline()
 
 timeline
 
@@ -265,16 +265,18 @@ with openapi_client.ApiClient() as api_client:
     api_instance = default_api.DefaultApi(api_client)
     inline_object5 = InlineObject5(
         session_id="session_id_example",
+        start=1,
+        stop=1,
     ) # InlineObject5 |  (optional)
 
     # example passing only required values which don't have defaults set
     # and optional values
     try:
         # timeline
-        api_response = api_instance.get_api_timeline(inline_object5=inline_object5)
+        api_response = api_instance.get_timeline(inline_object5=inline_object5)
         pprint(api_response)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->get_api_timeline: %s\n" % e)
+        print("Exception when calling DefaultApi->get_timeline: %s\n" % e)
 ```
 
 
@@ -296,73 +298,6 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/json
-
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_api_user**
-> InlineResponse200 get_api_user(user_id)
-
-user_info
-
-ユーザー情報
-
-### Example
-
-
-```python
-import time
-import openapi_client
-from openapi_client.api import default_api
-from openapi_client.model.inline_response200 import InlineResponse200
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost:8080
-# See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
-    host = "http://localhost:8080"
-)
-
-
-# Enter a context with an instance of the API client
-with openapi_client.ApiClient() as api_client:
-    # Create an instance of the API class
-    api_instance = default_api.DefaultApi(api_client)
-    user_id = 1 # int | 
-
-    # example passing only required values which don't have defaults set
-    try:
-        # user_info
-        api_response = api_instance.get_api_user(user_id)
-        pprint(api_response)
-    except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->get_api_user: %s\n" % e)
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **user_id** | **int**|  |
-
-### Return type
-
-[**InlineResponse200**](InlineResponse200.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/xml
 
 
 ### HTTP response details
@@ -436,12 +371,12 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_api_signup**
-> InlineResponse201 post_api_signup()
+# **get_user**
+> InlineResponse200 get_user(user_id)
 
+user_info
 
-
-サインアップ
+ユーザー情報
 
 ### Example
 
@@ -450,8 +385,7 @@ No authorization required
 import time
 import openapi_client
 from openapi_client.api import default_api
-from openapi_client.model.inline_object import InlineObject
-from openapi_client.model.inline_response201 import InlineResponse201
+from openapi_client.model.inline_response200 import InlineResponse200
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
@@ -464,18 +398,15 @@ configuration = openapi_client.Configuration(
 with openapi_client.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = default_api.DefaultApi(api_client)
-    inline_object = InlineObject(
-        name="name_example",
-        pw="pw_example",
-    ) # InlineObject |  (optional)
+    user_id = 1 # int | 
 
     # example passing only required values which don't have defaults set
-    # and optional values
     try:
-        api_response = api_instance.post_api_signup(inline_object=inline_object)
+        # user_info
+        api_response = api_instance.get_user(user_id)
         pprint(api_response)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->post_api_signup: %s\n" % e)
+        print("Exception when calling DefaultApi->get_user: %s\n" % e)
 ```
 
 
@@ -483,11 +414,11 @@ with openapi_client.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inline_object** | [**InlineObject**](InlineObject.md)|  | [optional]
+ **user_id** | **int**|  |
 
 ### Return type
 
-[**InlineResponse201**](InlineResponse201.md)
+[**InlineResponse200**](InlineResponse200.md)
 
 ### Authorization
 
@@ -495,16 +426,15 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/xml
 
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Created |  -  |
-**409** | Conflict |  -  |
+**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -651,6 +581,78 @@ No authorization required
 |-------------|-------------|------------------|
 **200** | OK |  -  |
 **400** | Bad Request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_signup**
+> InlineResponse201 post_signup()
+
+
+
+サインアップ
+
+### Example
+
+
+```python
+import time
+import openapi_client
+from openapi_client.api import default_api
+from openapi_client.model.inline_object import InlineObject
+from openapi_client.model.inline_response201 import InlineResponse201
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi_client.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with openapi_client.ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = default_api.DefaultApi(api_client)
+    inline_object = InlineObject(
+        name="name_example",
+        pw="pw_example",
+    ) # InlineObject |  (optional)
+
+    # example passing only required values which don't have defaults set
+    # and optional values
+    try:
+        api_response = api_instance.post_signup(inline_object=inline_object)
+        pprint(api_response)
+    except openapi_client.ApiException as e:
+        print("Exception when calling DefaultApi->post_signup: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inline_object** | [**InlineObject**](InlineObject.md)|  | [optional]
+
+### Return type
+
+[**InlineResponse201**](InlineResponse201.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Created |  -  |
+**409** | Conflict |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

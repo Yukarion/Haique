@@ -79,9 +79,9 @@ inline_object6 = InlineObject6(
     ) # InlineObject6 |  (optional)
 
     try:
-        api_instance.delete_api_haiku_id(haiku_id, inline_object6=inline_object6)
+        api_instance.delete_haiku(haiku_id, inline_object6=inline_object6)
     except openapi_client.ApiException as e:
-        print("Exception when calling DefaultApi->delete_api_haiku_id: %s\n" % e)
+        print("Exception when calling DefaultApi->delete_haiku: %s\n" % e)
 ```
 
 ## Documentation for API Endpoints
@@ -90,15 +90,15 @@ All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**delete_api_haiku_id**](docs/DefaultApi.md#delete_api_haiku_id) | **DELETE** /api/{haiku_id} | 
-*DefaultApi* | [**delete_api_subscribe_user_id**](docs/DefaultApi.md#delete_api_subscribe_user_id) | **DELETE** /api/subscribe/{user_id} | 
-*DefaultApi* | [**get_api_haiku_id**](docs/DefaultApi.md#get_api_haiku_id) | **GET** /api/{haiku_id} | get_haiku
-*DefaultApi* | [**get_api_timeline**](docs/DefaultApi.md#get_api_timeline) | **GET** /api/timeline | timeline
-*DefaultApi* | [**get_api_user**](docs/DefaultApi.md#get_api_user) | **GET** /api/users/{user_id} | user_info
+*DefaultApi* | [**delete_haiku**](docs/DefaultApi.md#delete_haiku) | **DELETE** /api/{haiku_id} | 
+*DefaultApi* | [**delete_subscribe**](docs/DefaultApi.md#delete_subscribe) | **DELETE** /api/subscribe/{user_id} | 
+*DefaultApi* | [**get_haiku**](docs/DefaultApi.md#get_haiku) | **GET** /api/{haiku_id} | get_haiku
+*DefaultApi* | [**get_timeline**](docs/DefaultApi.md#get_timeline) | **GET** /api/timeline | timeline
 *DefaultApi* | [**get_top**](docs/DefaultApi.md#get_top) | **GET** /api/top | top
-*DefaultApi* | [**post_api_signup**](docs/DefaultApi.md#post_api_signup) | **POST** /api/signup | 
+*DefaultApi* | [**get_user**](docs/DefaultApi.md#get_user) | **GET** /api/users/{user_id} | user_info
 *DefaultApi* | [**post_haiku**](docs/DefaultApi.md#post_haiku) | **POST** /api/post-haiku | 
 *DefaultApi* | [**post_signin**](docs/DefaultApi.md#post_signin) | **POST** /api/signin | 
+*DefaultApi* | [**post_signup**](docs/DefaultApi.md#post_signup) | **POST** /api/signup | 
 *DefaultApi* | [**post_subscribe**](docs/DefaultApi.md#post_subscribe) | **POST** /api/subscribe/{user_id} | 
 
 

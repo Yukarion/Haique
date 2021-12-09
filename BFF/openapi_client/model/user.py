@@ -85,7 +85,8 @@ class User(ModelNormal):
             'name': (str,),  # noqa: E501
             'subscription': ([int],),  # noqa: E501
             'subscribed_by': ([int],),  # noqa: E501
-            'haiku_id_list': ([int],),  # noqa: E501
+            'author_haiku_id_list': ([int],),  # noqa: E501
+            'timeline_haiku_id_list': ([int],),  # noqa: E501
         }
 
     @cached_property
@@ -98,7 +99,8 @@ class User(ModelNormal):
         'name': 'name',  # noqa: E501
         'subscription': 'subscription',  # noqa: E501
         'subscribed_by': 'subscribed_by',  # noqa: E501
-        'haiku_id_list': 'haiku_id_list',  # noqa: E501
+        'author_haiku_id_list': 'author_haiku_id_list',  # noqa: E501
+        'timeline_haiku_id_list': 'timeline_haiku_id_list',  # noqa: E501
     }
 
     read_only_vars = {
@@ -108,7 +110,7 @@ class User(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, user_id, name, subscription, subscribed_by, haiku_id_list, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, user_id, name, subscription, subscribed_by, author_haiku_id_list, timeline_haiku_id_list, *args, **kwargs):  # noqa: E501
         """User - a model defined in OpenAPI
 
         Args:
@@ -116,7 +118,8 @@ class User(ModelNormal):
             name (str):
             subscription ([int]):
             subscribed_by ([int]):
-            haiku_id_list ([int]):
+            author_haiku_id_list ([int]):
+            timeline_haiku_id_list ([int]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -180,7 +183,8 @@ class User(ModelNormal):
         self.name = name
         self.subscription = subscription
         self.subscribed_by = subscribed_by
-        self.haiku_id_list = haiku_id_list
+        self.author_haiku_id_list = author_haiku_id_list
+        self.timeline_haiku_id_list = timeline_haiku_id_list
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -201,7 +205,7 @@ class User(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, user_id, name, subscription, subscribed_by, haiku_id_list, *args, **kwargs):  # noqa: E501
+    def __init__(self, user_id, name, subscription, subscribed_by, author_haiku_id_list, timeline_haiku_id_list, *args, **kwargs):  # noqa: E501
         """User - a model defined in OpenAPI
 
         Args:
@@ -209,7 +213,8 @@ class User(ModelNormal):
             name (str):
             subscription ([int]):
             subscribed_by ([int]):
-            haiku_id_list ([int]):
+            author_haiku_id_list ([int]):
+            timeline_haiku_id_list ([int]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -271,7 +276,8 @@ class User(ModelNormal):
         self.name = name
         self.subscription = subscription
         self.subscribed_by = subscribed_by
-        self.haiku_id_list = haiku_id_list
+        self.author_haiku_id_list = author_haiku_id_list
+        self.timeline_haiku_id_list = timeline_haiku_id_list
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

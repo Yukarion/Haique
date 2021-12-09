@@ -1,6 +1,5 @@
 .gitignore
 .gitlab-ci.yml
-.openapi-generator-ignore
 .travis.yml
 README.md
 docs/ApiPostHaikuContent.md
@@ -49,19 +48,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_api_post_haiku_content.py
-test/test_default_api.py
-test/test_haiku.py
-test/test_haiku_content.py
-test/test_inline_object.py
-test/test_inline_object1.py
-test/test_inline_object2.py
-test/test_inline_object3.py
-test/test_inline_object4.py
-test/test_inline_object5.py
-test/test_inline_object6.py
-test/test_inline_response200.py
-test/test_inline_response2001.py
-test/test_inline_response201.py
-test/test_user.py
 tox.ini

@@ -23,36 +23,29 @@ class TestDefaultApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_delete_api_haiku_id(self):
-        """Test case for delete_api_haiku_id
+    def test_delete_haiku(self):
+        """Test case for delete_haiku
 
         """
         pass
 
-    def test_delete_api_subscribe_user_id(self):
-        """Test case for delete_api_subscribe_user_id
+    def test_delete_subscribe(self):
+        """Test case for delete_subscribe
 
         """
         pass
 
-    def test_get_api_haiku_id(self):
-        """Test case for get_api_haiku_id
+    def test_get_haiku(self):
+        """Test case for get_haiku
 
         get_haiku  # noqa: E501
         """
         pass
 
-    def test_get_api_timeline(self):
-        """Test case for get_api_timeline
+    def test_get_timeline(self):
+        """Test case for get_timeline
 
         timeline  # noqa: E501
-        """
-        pass
-
-    def test_get_api_user(self):
-        """Test case for get_api_user
-
-        user_info  # noqa: E501
         """
         pass
 
@@ -63,9 +56,10 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
-    def test_post_api_signup(self):
-        """Test case for post_api_signup
+    def test_get_user(self):
+        """Test case for get_user
 
+        user_info  # noqa: E501
         """
         pass
 
@@ -77,6 +71,12 @@ class TestDefaultApi(unittest.TestCase):
 
     def test_post_signin(self):
         """Test case for post_signin
+
+        """
+        pass
+
+    def test_post_signup(self):
+        """Test case for post_signup
 
         """
         pass

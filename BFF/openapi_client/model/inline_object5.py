@@ -82,6 +82,8 @@ class InlineObject5(ModelNormal):
         """
         return {
             'session_id': (str,),  # noqa: E501
+            'start': (int,),  # noqa: E501
+            'stop': (int,),  # noqa: E501
         }
 
     @cached_property
@@ -91,6 +93,8 @@ class InlineObject5(ModelNormal):
 
     attribute_map = {
         'session_id': 'session_id',  # noqa: E501
+        'start': 'start',  # noqa: E501
+        'stop': 'stop',  # noqa: E501
     }
 
     read_only_vars = {
@@ -137,6 +141,8 @@ class InlineObject5(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            start (int): 最新のhaikuからN番目を起点とする（デフォルト0）. [optional]  # noqa: E501
+            stop (int): 最新のhaikuからM番目を終点とする（デフォルト30）. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -222,6 +228,8 @@ class InlineObject5(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            start (int): 最新のhaikuからN番目を起点とする（デフォルト0）. [optional]  # noqa: E501
+            stop (int): 最新のhaikuからM番目を終点とする（デフォルト30）. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

@@ -45,12 +45,12 @@ class DefaultApi(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-        self.delete_api_haiku_id_endpoint = _Endpoint(
+        self.delete_haiku_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [],
                 'endpoint_path': '/api/{haiku_id}',
-                'operation_id': 'delete_api_haiku_id',
+                'operation_id': 'delete_haiku',
                 'http_method': 'DELETE',
                 'servers': None,
             },
@@ -98,12 +98,12 @@ class DefaultApi(object):
             },
             api_client=api_client
         )
-        self.delete_api_subscribe_user_id_endpoint = _Endpoint(
+        self.delete_subscribe_endpoint = _Endpoint(
             settings={
                 'response_type': None,
                 'auth': [],
                 'endpoint_path': '/api/subscribe/{user_id}',
-                'operation_id': 'delete_api_subscribe_user_id',
+                'operation_id': 'delete_subscribe',
                 'http_method': 'DELETE',
                 'servers': None,
             },
@@ -151,12 +151,12 @@ class DefaultApi(object):
             },
             api_client=api_client
         )
-        self.get_api_haiku_id_endpoint = _Endpoint(
+        self.get_haiku_endpoint = _Endpoint(
             settings={
                 'response_type': (InlineResponse2001,),
                 'auth': [],
                 'endpoint_path': '/api/{haiku_id}',
-                'operation_id': 'get_api_haiku_id',
+                'operation_id': 'get_haiku',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -200,12 +200,12 @@ class DefaultApi(object):
             },
             api_client=api_client
         )
-        self.get_api_timeline_endpoint = _Endpoint(
+        self.get_timeline_endpoint = _Endpoint(
             settings={
                 'response_type': ([Haiku],),
                 'auth': [],
                 'endpoint_path': '/api/timeline',
-                'operation_id': 'get_api_timeline',
+                'operation_id': 'get_timeline',
                 'http_method': 'GET',
                 'servers': None,
             },
@@ -245,55 +245,6 @@ class DefaultApi(object):
                 'content_type': [
                     'application/json'
                 ]
-            },
-            api_client=api_client
-        )
-        self.get_api_user_endpoint = _Endpoint(
-            settings={
-                'response_type': (InlineResponse200,),
-                'auth': [],
-                'endpoint_path': '/api/users/{user_id}',
-                'operation_id': 'get_api_user',
-                'http_method': 'GET',
-                'servers': None,
-            },
-            params_map={
-                'all': [
-                    'user_id',
-                ],
-                'required': [
-                    'user_id',
-                ],
-                'nullable': [
-                ],
-                'enum': [
-                ],
-                'validation': [
-                ]
-            },
-            root_map={
-                'validations': {
-                },
-                'allowed_values': {
-                },
-                'openapi_types': {
-                    'user_id':
-                        (int,),
-                },
-                'attribute_map': {
-                    'user_id': 'user_id',
-                },
-                'location_map': {
-                    'user_id': 'path',
-                },
-                'collection_format_map': {
-                }
-            },
-            headers_map={
-                'accept': [
-                    'application/xml'
-                ],
-                'content_type': [],
             },
             api_client=api_client
         )
@@ -339,20 +290,22 @@ class DefaultApi(object):
             },
             api_client=api_client
         )
-        self.post_api_signup_endpoint = _Endpoint(
+        self.get_user_endpoint = _Endpoint(
             settings={
-                'response_type': (InlineResponse201,),
+                'response_type': (InlineResponse200,),
                 'auth': [],
-                'endpoint_path': '/api/signup',
-                'operation_id': 'post_api_signup',
-                'http_method': 'POST',
+                'endpoint_path': '/api/users/{user_id}',
+                'operation_id': 'get_user',
+                'http_method': 'GET',
                 'servers': None,
             },
             params_map={
                 'all': [
-                    'inline_object',
+                    'user_id',
                 ],
-                'required': [],
+                'required': [
+                    'user_id',
+                ],
                 'nullable': [
                 ],
                 'enum': [
@@ -366,24 +319,23 @@ class DefaultApi(object):
                 'allowed_values': {
                 },
                 'openapi_types': {
-                    'inline_object':
-                        (InlineObject,),
+                    'user_id':
+                        (int,),
                 },
                 'attribute_map': {
+                    'user_id': 'user_id',
                 },
                 'location_map': {
-                    'inline_object': 'body',
+                    'user_id': 'path',
                 },
                 'collection_format_map': {
                 }
             },
             headers_map={
                 'accept': [
-                    'application/json'
+                    'application/xml'
                 ],
-                'content_type': [
-                    'application/json'
-                ]
+                'content_type': [],
             },
             api_client=api_client
         )
@@ -482,6 +434,54 @@ class DefaultApi(object):
             },
             api_client=api_client
         )
+        self.post_signup_endpoint = _Endpoint(
+            settings={
+                'response_type': (InlineResponse201,),
+                'auth': [],
+                'endpoint_path': '/api/signup',
+                'operation_id': 'post_signup',
+                'http_method': 'POST',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'inline_object',
+                ],
+                'required': [],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'inline_object':
+                        (InlineObject,),
+                },
+                'attribute_map': {
+                },
+                'location_map': {
+                    'inline_object': 'body',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json'
+                ],
+                'content_type': [
+                    'application/json'
+                ]
+            },
+            api_client=api_client
+        )
         self.post_subscribe_endpoint = _Endpoint(
             settings={
                 'response_type': None,
@@ -536,18 +536,18 @@ class DefaultApi(object):
             api_client=api_client
         )
 
-    def delete_api_haiku_id(
+    def delete_haiku(
         self,
         haiku_id,
         **kwargs
     ):
-        """delete_api_haiku_id  # noqa: E501
+        """delete_haiku  # noqa: E501
 
         haikuを削除  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.delete_api_haiku_id(haiku_id, async_req=True)
+        >>> thread = api.delete_haiku(haiku_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -606,20 +606,20 @@ class DefaultApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['haiku_id'] = \
             haiku_id
-        return self.delete_api_haiku_id_endpoint.call_with_http_info(**kwargs)
+        return self.delete_haiku_endpoint.call_with_http_info(**kwargs)
 
-    def delete_api_subscribe_user_id(
+    def delete_subscribe(
         self,
         user_id,
         **kwargs
     ):
-        """delete_api_subscribe_user_id  # noqa: E501
+        """delete_subscribe  # noqa: E501
 
         リムーブ  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.delete_api_subscribe_user_id(user_id, async_req=True)
+        >>> thread = api.delete_subscribe(user_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -678,9 +678,9 @@ class DefaultApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['user_id'] = \
             user_id
-        return self.delete_api_subscribe_user_id_endpoint.call_with_http_info(**kwargs)
+        return self.delete_subscribe_endpoint.call_with_http_info(**kwargs)
 
-    def get_api_haiku_id(
+    def get_haiku(
         self,
         haiku_id,
         **kwargs
@@ -691,7 +691,7 @@ class DefaultApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_api_haiku_id(haiku_id, async_req=True)
+        >>> thread = api.get_haiku(haiku_id, async_req=True)
         >>> result = thread.get()
 
         Args:
@@ -749,9 +749,9 @@ class DefaultApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         kwargs['haiku_id'] = \
             haiku_id
-        return self.get_api_haiku_id_endpoint.call_with_http_info(**kwargs)
+        return self.get_haiku_endpoint.call_with_http_info(**kwargs)
 
-    def get_api_timeline(
+    def get_timeline(
         self,
         **kwargs
     ):
@@ -761,7 +761,7 @@ class DefaultApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_api_timeline(async_req=True)
+        >>> thread = api.get_timeline(async_req=True)
         >>> result = thread.get()
 
 
@@ -816,78 +816,7 @@ class DefaultApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.get_api_timeline_endpoint.call_with_http_info(**kwargs)
-
-    def get_api_user(
-        self,
-        user_id,
-        **kwargs
-    ):
-        """user_info  # noqa: E501
-
-        ユーザー情報  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.get_api_user(user_id, async_req=True)
-        >>> result = thread.get()
-
-        Args:
-            user_id (int):
-
-        Keyword Args:
-            _return_http_data_only (bool): response data without head status
-                code and headers. Default is True.
-            _preload_content (bool): if False, the urllib3.HTTPResponse object
-                will be returned without reading/decoding response data.
-                Default is True.
-            _request_timeout (int/float/tuple): timeout setting for this request. If
-                one number provided, it will be total request timeout. It can also
-                be a pair (tuple) of (connection, read) timeouts.
-                Default is None.
-            _check_input_type (bool): specifies if type checking
-                should be done one the data sent to the server.
-                Default is True.
-            _check_return_type (bool): specifies if type checking
-                should be done one the data received from the server.
-                Default is True.
-            _content_type (str/None): force body content-type.
-                Default is None and content-type will be predicted by allowed
-                content-types and body.
-            _host_index (int/None): specifies the index of the server
-                that we want to use.
-                Default is read from the configuration.
-            async_req (bool): execute request asynchronously
-
-        Returns:
-            InlineResponse200
-                If the method is called asynchronously, returns the request
-                thread.
-        """
-        kwargs['async_req'] = kwargs.get(
-            'async_req', False
-        )
-        kwargs['_return_http_data_only'] = kwargs.get(
-            '_return_http_data_only', True
-        )
-        kwargs['_preload_content'] = kwargs.get(
-            '_preload_content', True
-        )
-        kwargs['_request_timeout'] = kwargs.get(
-            '_request_timeout', None
-        )
-        kwargs['_check_input_type'] = kwargs.get(
-            '_check_input_type', True
-        )
-        kwargs['_check_return_type'] = kwargs.get(
-            '_check_return_type', True
-        )
-        kwargs['_content_type'] = kwargs.get(
-            '_content_type')
-        kwargs['_host_index'] = kwargs.get('_host_index')
-        kwargs['user_id'] = \
-            user_id
-        return self.get_api_user_endpoint.call_with_http_info(**kwargs)
+        return self.get_timeline_endpoint.call_with_http_info(**kwargs)
 
     def get_top(
         self,
@@ -955,22 +884,24 @@ class DefaultApi(object):
         kwargs['_host_index'] = kwargs.get('_host_index')
         return self.get_top_endpoint.call_with_http_info(**kwargs)
 
-    def post_api_signup(
+    def get_user(
         self,
+        user_id,
         **kwargs
     ):
-        """post_api_signup  # noqa: E501
+        """user_info  # noqa: E501
 
-        サインアップ  # noqa: E501
+        ユーザー情報  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.post_api_signup(async_req=True)
+        >>> thread = api.get_user(user_id, async_req=True)
         >>> result = thread.get()
 
+        Args:
+            user_id (int):
 
         Keyword Args:
-            inline_object (InlineObject): [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -995,7 +926,7 @@ class DefaultApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            InlineResponse201
+            InlineResponse200
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -1020,7 +951,9 @@ class DefaultApi(object):
         kwargs['_content_type'] = kwargs.get(
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
-        return self.post_api_signup_endpoint.call_with_http_info(**kwargs)
+        kwargs['user_id'] = \
+            user_id
+        return self.get_user_endpoint.call_with_http_info(**kwargs)
 
     def post_haiku(
         self,
@@ -1155,6 +1088,73 @@ class DefaultApi(object):
             '_content_type')
         kwargs['_host_index'] = kwargs.get('_host_index')
         return self.post_signin_endpoint.call_with_http_info(**kwargs)
+
+    def post_signup(
+        self,
+        **kwargs
+    ):
+        """post_signup  # noqa: E501
+
+        サインアップ  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.post_signup(async_req=True)
+        >>> result = thread.get()
+
+
+        Keyword Args:
+            inline_object (InlineObject): [optional]
+            _return_http_data_only (bool): response data without head status
+                code and headers. Default is True.
+            _preload_content (bool): if False, the urllib3.HTTPResponse object
+                will be returned without reading/decoding response data.
+                Default is True.
+            _request_timeout (int/float/tuple): timeout setting for this request. If
+                one number provided, it will be total request timeout. It can also
+                be a pair (tuple) of (connection, read) timeouts.
+                Default is None.
+            _check_input_type (bool): specifies if type checking
+                should be done one the data sent to the server.
+                Default is True.
+            _check_return_type (bool): specifies if type checking
+                should be done one the data received from the server.
+                Default is True.
+            _content_type (str/None): force body content-type.
+                Default is None and content-type will be predicted by allowed
+                content-types and body.
+            _host_index (int/None): specifies the index of the server
+                that we want to use.
+                Default is read from the configuration.
+            async_req (bool): execute request asynchronously
+
+        Returns:
+            InlineResponse201
+                If the method is called asynchronously, returns the request
+                thread.
+        """
+        kwargs['async_req'] = kwargs.get(
+            'async_req', False
+        )
+        kwargs['_return_http_data_only'] = kwargs.get(
+            '_return_http_data_only', True
+        )
+        kwargs['_preload_content'] = kwargs.get(
+            '_preload_content', True
+        )
+        kwargs['_request_timeout'] = kwargs.get(
+            '_request_timeout', None
+        )
+        kwargs['_check_input_type'] = kwargs.get(
+            '_check_input_type', True
+        )
+        kwargs['_check_return_type'] = kwargs.get(
+            '_check_return_type', True
+        )
+        kwargs['_content_type'] = kwargs.get(
+            '_content_type')
+        kwargs['_host_index'] = kwargs.get('_host_index')
+        return self.post_signup_endpoint.call_with_http_info(**kwargs)
 
     def post_subscribe(
         self,

@@ -1,0 +1,459 @@
+openapi: 3.0.0
+info:
+  title: Haique
+  version: '1.0'
+  description: HaiqueのもろもろのAPI
+  license:
+    name: MIT
+  contact:
+    name: Mackyson
+servers:
+  - url: 'http://localhost:8080'
+    description: localhost
+paths:
+  /api/signup:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-signup
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    session_id: hoge
+                properties:
+                  session_id:
+                    type: string
+                    format: uuid
+                required:
+                  - session_id
+              examples: {}
+        '409':
+          description: Conflict
+      description: サインアップ
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                pw:
+                  type: string
+              required:
+                - name
+                - pw
+        description: ''
+  /api/signin:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-signin
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    session_id: hoge
+                properties:
+                  session_id:
+                    type: string
+                    format: uuid
+                required:
+                  - session_id
+              examples: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+      description: ログイン
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                pw:
+                  type: string
+              required:
+                - name
+                - pw
+  /api/post-haiku:
+    post:
+      summary: ''
+      operationId: post-haiku
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+      description: 詠む
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  content:
+                    first: using
+                    second: namespace
+                    third: std
+              properties:
+                session_id:
+                  type: string
+                  format: uuid
+                content:
+                  type: object
+                  required:
+                    - first
+                    - second
+                    - third
+                  properties:
+                    first:
+                      type: string
+                      minLength: 1
+                    second:
+                      type: string
+                      minLength: 1
+                    third:
+                      type: string
+                      minLength: 1
+              required:
+                - session_id
+                - content
+            examples: {}
+        description: ''
+    parameters: []
+  '/api/subscribe/{user_id}':
+    post:
+      summary: ''
+      operationId: post-subscribe
+      responses:
+        '200':
+          description: OK
+      description: フォロー
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
+              properties:
+                session_id:
+                  type: string
+                  format: uuid
+              required:
+                - session_id
+    parameters:
+      - schema:
+          type: integer
+        name: user_id
+        in: path
+        required: true
+    delete:
+      summary: ''
+      operationId: delete-subscribe
+      responses:
+        '200':
+          description: OK
+      description: リムーブ
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
+              properties:
+                session_id:
+                  type: string
+                  format: uuid
+              required:
+                - session_id
+  /api/top:
+    get:
+      summary: top
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Haiku'
+              examples:
+                example-1:
+                  value:
+                    - haiku_id: 0
+                      author_id: 0
+                      content:
+                        first: string
+                        second: string
+                        third: string
+                        author_name: string
+                      likes: 0
+                      created_at: 0
+      operationId: get-top
+      description: トップ30件のhaikuの取得
+      parameters: []
+    parameters: []
+  /api/timeline:
+    get:
+      summary: timeline
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: タイムラインでの俳句表示は名前以外のUser情報を載せない
+                items:
+                  $ref: '#/components/schemas/Haiku'
+      operationId: get-timeline
+      description: タイムラインの取得
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
+              properties:
+                session_id:
+                  type: string
+                  format: uuid
+                start:
+                  type: integer
+                  description: 最新のhaikuからN番目を起点とする（デフォルト0）
+                  format: int64
+                stop:
+                  type: integer
+                  description: 最新のhaikuからM番目を終点とする（デフォルト30）
+                  format: int64
+              required:
+                - session_id
+        description: ''
+  '/api/users/{user_id}':
+    parameters:
+      - schema:
+          type: integer
+          format: int64
+        name: user_id
+        in: path
+        required: true
+    get:
+      summary: user_info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  haikus:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Haiku'
+                required:
+                  - user
+                  - haikus
+      operationId: get-user
+      description: ユーザー情報
+      parameters: []
+  '/api/{haiku_id}':
+    parameters:
+      - schema:
+          type: integer
+          format: int64
+        name: haiku_id
+        in: path
+        required: true
+    get:
+      summary: get_haiku
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  author:
+                    $ref: '#/components/schemas/User'
+                  haiku:
+                    $ref: '#/components/schemas/Haiku'
+                required:
+                  - author
+                  - haiku
+      operationId: get-haiku
+      parameters: []
+      description: haikuの詳細を取得
+    delete:
+      summary: ''
+      operationId: delete-haiku
+      description: haikuを削除
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  session_id: hoge
+              properties:
+                session_id:
+                  type: string
+                  format: uuid
+              required:
+                - session_id
+        description: ''
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    User:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          user_id: 1
+          name: hoge
+          subscription:
+            - 1
+            - 2
+            - 3
+          subscribed_by:
+            - 1
+            - 2
+            - 3
+          posts:
+            - 1
+            - 2
+            - 3
+      properties:
+        user_id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        subscription:
+          type: array
+          items:
+            type: integer
+            format: int64
+        subscribed_by:
+          type: array
+          items:
+            type: integer
+            format: int64
+        author_haiku_id_list:
+          type: array
+          items:
+            type: integer
+            format: int64
+        timeline_haiku_id_list:
+          type: array
+          items:
+            type: integer
+            format: int64
+      required:
+        - user_id
+        - name
+        - subscription
+        - subscribed_by
+        - author_haiku_id_list
+        - timeline_haiku_id_list
+    Haiku:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          haiku_id: -9223372036854776000
+          author:
+            user_id: 1
+            user_name: hoge
+          content:
+            first: string
+            second: string
+            third: string
+          likes: 0
+          created_at: '2019-08-24T14:15:22Z'
+      properties:
+        haiku_id:
+          type: integer
+          format: int64
+        author_id:
+          type: integer
+          format: int64
+        content:
+          type: object
+          required:
+            - first
+            - second
+            - third
+            - author_name
+          properties:
+            first:
+              type: string
+              minLength: 1
+            second:
+              type: string
+              minLength: 1
+            third:
+              type: string
+              minLength: 1
+            author_name:
+              type: string
+        likes:
+          type: integer
+        created_at:
+          type: integer
+          description: unixtime
+          format: int64
+      required:
+        - haiku_id
+        - author_id
+        - content
+        - likes
+        - created_at

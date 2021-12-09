@@ -110,8 +110,12 @@ class InlineResponse2001(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, author, haiku, *args, **kwargs):  # noqa: E501
         """InlineResponse2001 - a model defined in OpenAPI
+
+        Args:
+            author (User):
+            haiku (Haiku):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -144,8 +148,6 @@ class InlineResponse2001(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            author (User): [optional]  # noqa: E501
-            haiku (Haiku): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -173,6 +175,8 @@ class InlineResponse2001(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.author = author
+        self.haiku = haiku
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -193,8 +197,12 @@ class InlineResponse2001(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, *args, **kwargs):  # noqa: E501
+    def __init__(self, author, haiku, *args, **kwargs):  # noqa: E501
         """InlineResponse2001 - a model defined in OpenAPI
+
+        Args:
+            author (User):
+            haiku (Haiku):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -227,8 +235,6 @@ class InlineResponse2001(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            author (User): [optional]  # noqa: E501
-            haiku (Haiku): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -254,6 +260,8 @@ class InlineResponse2001(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
+        self.author = author
+        self.haiku = haiku
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
