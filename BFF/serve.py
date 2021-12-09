@@ -10,7 +10,7 @@ def hello_world():
 @app.route("/top")
 def get_top():
 
-    url = "http://localhost:8080/api/top"
+    url = "http://api-server:8080/api/top"
 
     r = requests.get(url)
     print(r.json())
@@ -18,4 +18,4 @@ def get_top():
 
 ## おまじない
 if __name__ == "__main__":
-    app.run(debug=True,port=5000)
+    app.run(debug=True,port=5000,host="0.0.0.0")

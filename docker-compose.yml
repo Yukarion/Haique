@@ -13,8 +13,17 @@ services:
     tty: true
     volumes:
       - "./APIserver/:/app"
-  #BFF:
-    #
+  bff:
+    build:
+      context: .
+      dockerfile: ./build/BFF/dev/Dockerfile
+    container_name: bff
+    restart: always
+    ports:
+      - 5000:5000
+    volumes:
+      - "./BFF/:/app"
+
   redis:
     container_name: redis
     image: redis:latest
