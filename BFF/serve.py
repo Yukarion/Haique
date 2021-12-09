@@ -6,7 +6,8 @@ from openapi_client.models import *
 
 from openapi_client.model.inline_object import InlineObject
 from openapi_client.model.inline_response201 import InlineResponse201
-
+import requests as rq
+import json
 
 app = Flask(__name__)
 
@@ -27,15 +28,13 @@ def get_top():
             api_response = api_instance.get_top()
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->get_top: %s\n" % e)
-            resp = make_response(render_template("error.html",title="Error occured"))
-            return resp
+            return render_template("error.html",title="Error occured")
 
         return render_template('top.html',title='top_30Haiku', Haikus=api_response)
 
 @app.route("/signup")
 def get_signup():
     return render_template('signup.html',title='signup',err="")
-
 @app.route("/signup",methods=["POST"])
 def post_signup():
     with openapi_client.ApiClient(configuration=configuration) as api_client:
@@ -70,8 +69,6 @@ def post_signin():
             pw = request.form.get("password"),
         ) # InlineObject1 |  (optional)
 
-        # example passing only required values which don't have defaults set
-        # and optional values
         try:
             api_response = api_instance.post_signin(inline_object1=inline_object1)
         except openapi_client.ApiException as e:
@@ -80,6 +77,7 @@ def post_signin():
         resp = make_response(render_template('signup_done.html',title='signup'))
         resp.set_cookie("session_id",api_response.session_id)
         return resp
+
 @app.route("/post-haiku")
 def get_post_haiku(): #地獄みたいな名前だが、post-haikuへのGETリクエストを捌くところです
     return render_template('post-haiku.html',title='post haiku',err="")
@@ -103,8 +101,6 @@ def post_post_haiku():
             ),
         ) # InlineObject2 |  (optional)
 
-        # example passing only required values which don't have defaults set
-        # and optional values
         try:
             api_instance.post_haiku(inline_object2=inline_object2)
         except openapi_client.ApiException as e:
@@ -112,6 +108,33 @@ def post_post_haiku():
             return render_template('session_error.html',title='session error')
         return render_template('post-haiku_done.html',title='post haiku')
 
+@app.route("/timeline")
+def get_timeline():
+        # # 以下のコード（Exampleコピペ）で、サーバにinline_object5の中身が全く届いていないので、openAPI generatorのバグを疑っている。
+    # with openapi_client.ApiClient(configuration=configuration) as api_client:
+    #     # Create an instance of the API class
+    #     api_instance = default_api.DefaultApi(api_client)
+    #     inline_object5 = InlineObject3(
+    #         session_id="session_id_example",
+    #     ) # InlineObject5 |  (optional)
+
+    #     # example passing only required values which don't have defaults set
+    #     # and optional values
+    #     try:
+    #         # timeline
+    #         print(inline_object5)
+    #         api_response = api_instance.get_timeline(inline_object5=inline_object5)
+    #     except openapi_client.ApiException as e:
+    #         print("Exception when calling DefaultApi->get_timeline: %s\n" % e)
+    #         return render_template("session_error.html",title="session error")
+        
+    #     return render_template('timeline.html',title='timeline', Haikus=api_response)
+
+    # 仕方がないので、timelineに関してはAd-hocに実装する。
+    url = "http://api-server:8080/api/timeline"
+    json_data = {"session_id": request.cookies.get("session_id")}
+    r = rq.get(url,json=json_data)
+    return render_template('timeline.html',title='timeline', Haikus=r.json())
 ## おまじない
 if __name__ == "__main__":
     app.run(debug=True,port=5000,host="0.0.0.0")
