@@ -84,7 +84,23 @@ def post_signin():
             return render_template('signin.html',title='signup',err="Wrong password or name")
         resp = make_response(render_template('signup_done.html',title='signup'))
         resp.set_cookie("session_id",api_response.session_id)
-        return resp 
+        return resp
+
+@app.route("/api/haiku/<haiku_id>")
+def get_haiku(haiku_id=None):
+    with openapi_client.ApiClient(configuration) as api_client:
+        # Create an instance of the API class
+        api_instance = default_api.DefaultApi(api_client)
+
+        try:
+            # get_haiku
+            api_response = api_instance.get_haiku(haiku_id)
+        except openapi_client.ApiException as e:
+            print("Exception when calling DefaultApi->delete_haiku: %s\n" % e)
+            resp = make_response(render_template("error.html",title="Error occured"))
+            return resp
+
+    return render_templete('haiku_description.html',title='haiku_description', Haiku=api_response)
 
 ## おまじない
 if __name__ == "__main__":

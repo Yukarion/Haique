@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block content %}
+<h3>Haiku description</h3>
+<ul>
+  <li>{{Haiku.content.first}}</li>
+  <li>{{Haiku.content.second}}</li>
+  <li>{{Haiku.content.third}}</li>
+  <li>--<a href={ "./api/user/"+haiku.author_id}>{{haiku.content.author_name}}</a></li>
+</ul>
+{% endblock %}
