@@ -23,7 +23,7 @@ func main() {
 	e.DELETE("/api/subscribe/:user_id", c.DeleteSubscribe)
 
 	// GetApiHaikuId - get_haiku
-	e.GET("/api/:haiku_id", c.GetHaiku)
+	e.GET("/api/haiku/:haiku_id", c.GetHaiku)
 
 	// GetApiTimeline - timeline
 	e.GET("/api/timeline", c.GetTimeline)

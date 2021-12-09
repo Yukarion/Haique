@@ -6,7 +6,7 @@ from openapi_client.models import *
 
 from openapi_client.model.inline_object import InlineObject
 from openapi_client.model.inline_response201 import InlineResponse201
-from pprint import pprint
+
 
 app = Flask(__name__)
 
@@ -83,15 +83,14 @@ def post_signin():
 
 @app.route("/api/haiku/<haiku_id>")
 def get_haiku(haiku_id_str=None):
-    with openapi_client.ApiClient() as api_client:
+    haiku_id = 1
+    with openapi_client.ApiClient(configuration) as api_client:
         # Create an instance of the API class
         api_instance = default_api.DefaultApi(api_client)
-        haiku_id = 1 # int |
 
-        # example passing only required values which don't have defaults set
         try:
             # get_haiku
-            api_response = api_instance.get_haiku(haiku_id)
+            api_response = api_instance.get_haiku(1)
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->delete_haiku: %s\n" % e)
             resp = make_response(render_template("error.html",title="Error occured"))

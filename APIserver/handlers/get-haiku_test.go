@@ -127,7 +127,7 @@ func TestGetHaiku(t *testing.T) {
 			req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 			rec := httptest.NewRecorder()
 			ctx := e.NewContext(req, rec)
-			ctx.SetPath("/api/:haiku_id")
+			ctx.SetPath("/api/haiku/:haiku_id")
 			ctx.SetParamNames("haiku_id")
 			ctx.SetParamValues(test.path_param)
 
