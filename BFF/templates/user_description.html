@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block content %}
+<h3>User page</h3>
+<h4>{{User.user.name}}</h4>
+<h3>{{User}}</h3>
+<form action="/api/subscribe/{{User.user.user_id}}" method="POST" enctype="multipart/form-data">
+  <button>subscription</button>
+</form>
+<h5>subscription: {{User.user.subscription}}</h5>
+<h5>subscribed_by: {{User.user.subscribed_by}}</h5>
+<ul>
+  {% for Haiku in User.haikus %}
+  <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」  --{{Haiku.content.author_name}}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

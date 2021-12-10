@@ -1,9 +1,13 @@
 {% extends "index.html" %}
 {% block content %}
 <h3>newest 30 Haikus</h3>
+{% if Haikus %}
 <ul>
-  {% for Haiku in Haikus %}
-  <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」  --{{Haiku.content.author_name}}</li>
-  {% endfor %}
+    {% for Haiku in Haikus %}
+    <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」  --{{Haiku.content.author_name}}</li>
+    {% endfor %}
 </ul>
+{% else %}
+No haiku posted...
+{% endif %}
 {% endblock %}

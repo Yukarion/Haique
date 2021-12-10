@@ -78,6 +78,42 @@ def post_signin():
         resp.set_cookie("session_id",api_response.session_id)
         return resp
 
+@app.route("/haiku/<haiku_id_str>")
+def get_haiku(haiku_id_str=None):
+   with openapi_client.ApiClient(configuration=configuration) as api_client:
+       # Create an instance of the API class
+       api_instance = default_api.DefaultApi(api_client)
+       haiku_id = 1 # int |
+
+       # example passing only required values which don't have defaults set
+       try:
+           # get_haiku
+           api_response = api_instance.get_haiku(haiku_id)
+       except openapi_client.ApiException as e:
+           print("Exception when calling DefaultApi->delete_haiku: %s\n" % e)
+           resp = make_response(render_template("error.html",title="Error occured"))
+           return resp
+
+   return render_template('haiku_description.html',title='haiku_description', Haiku=api_response)
+
+@app.route("/user/<user_id_str>")
+def get_user(user_id_str=None):
+   with openapi_client.ApiClient(configuration=configuration) as api_client:
+       # Create an instance of the API class
+       api_instance = default_api.DefaultApi(api_client)
+       user_id = 1 # int |
+
+       # example passing only required values which don't have defaults set
+       try:
+           # user_info
+           api_response = api_instance.get_user(user_id)
+       except openapi_client.ApiException as e:
+           print("Exception when calling DefaultApi->get_user: %s\n" % e)
+           resp = make_response(render_template("error.html",title="Error occured"))
+           return resp
+
+   return render_template('user_description.html',title='user_page', User=api_response)
+
 @app.route("/post-haiku")
 def get_post_haiku(): #地獄みたいな名前だが、post-haikuへのGETリクエストを捌くところです
     return render_template('post-haiku.html',title='post haiku',err="")
