@@ -10,15 +10,21 @@
 </form>
 <h5>subscribes</h5>
 {% if User.user.subscription %}
-  [% for user_id in User.user.subscription %}
-  <a href="/user/{{user_id}}">user_id:{{user_id}}</a>
+<ul>
+  {% for user_id in User.user.subscription %}
+  <li><a href="/user/{{user_id}}">user_id:{{user_id}}</a></li>
+  {% endfor %}
+</ul>
 {% else %}
 Nobody
 {% endif %}
-<h5>subscribed by: {{User.user.subscribed_by}}</h5>
+<h5>subscribed by</h5>
 {% if User.user.subscribed_by %}
-  [% for user_id in User.user.subscribed_by %}
-  <a href="/user/{{user_id}}">user_id:{{user_id}}</a>
+<ul>
+  {% for user_id in User.user.subscribed_by %}
+  <li><a href="/user/{{user_id}}">user_id:{{user_id}}</a></li>
+  {% endfor %}
+</ul>
 {% else %}
 Nobody
 {% endif %}

@@ -23,9 +23,9 @@ func (c *Container) DeleteSubscribe(ctx echo.Context) error {
 	}
 	receiver_id_str := ctx.Param("user_id")
 
-	//自分のsubscribeは弾く
+	//自分のunsubscribeは弾く
 	if subscriber_id_str == receiver_id_str {
-		return ctx.HTML(http.StatusBadRequest, "cannot subscribe myself")
+		return ctx.HTML(http.StatusBadRequest, "cannot unsubscribe myself")
 	}
 
 	//存在しないuser_idへのリクエストも弾く

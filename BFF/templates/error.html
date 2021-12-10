@@ -1,5 +1,9 @@
 {% extends "index.html" %}
 {% block content %}
 <h3>Error</h3>
+{% if err==None %}
 Sorry, something went wrong...
+{% else %}
+{{err}}
+{% endif %}
 {% endblock %}

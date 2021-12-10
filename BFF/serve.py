@@ -29,7 +29,7 @@ def get_top():
             api_response = api_instance.get_top()
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->get_top: %s\n" % e)
-            return render_template("error.html",title="Error occured")
+            return render_template("error.html",title="error",err=None)
 
         return render_template('top.html',title='top 30 Haikus', Haikus=api_response)
 
@@ -92,7 +92,7 @@ def get_haiku(haiku_id_str=None):
            api_response = api_instance.get_haiku(haiku_id)
        except openapi_client.ApiException as e:
            print("Exception when calling DefaultApi->delete_haiku: %s\n" % e)
-           resp = make_response(render_template("error.html",title="Error occured"))
+           resp = make_response(render_template("error.html",title="error",err=e.body))
            return resp
 
    return render_template('haiku_description.html',title='haiku description', response=api_response)
@@ -102,7 +102,7 @@ def get_user(user_id_str=None):
    with openapi_client.ApiClient(configuration=configuration) as api_client:
        # Create an instance of the API class
        api_instance = default_api.DefaultApi(api_client)
-       user_id = 1 # int |
+       user_id = int(user_id_str) # int |
 
        # example passing only required values which don't have defaults set
        try:
@@ -110,27 +110,47 @@ def get_user(user_id_str=None):
            api_response = api_instance.get_user(user_id)
        except openapi_client.ApiException as e:
            print("Exception when calling DefaultApi->get_user: %s\n" % e)
-           resp = make_response(render_template("error.html",title="Error occured"))
+           resp = make_response(render_template("error.html",title="error",err=e.body))
            return resp
 
    return render_template('user_description.html',title='user page', User=api_response)
+
 @app.route("/subscribe/<user_id_str>",methods=["POST"])
-def get_user(user_id_str=None):
-   with openapi_client.ApiClient(configuration=configuration) as api_client:
-       # Create an instance of the API class
-       api_instance = default_api.DefaultApi(api_client)
-       user_id = 1 # int |
+def post_subscribe(user_id_str=None):
+    with openapi_client.ApiClient(configuration=configuration) as api_client:
+        # Create an instance of the API class
+        api_instance = default_api.DefaultApi(api_client)
+        user_id = int(user_id_str) # int |
+        inline_object3 = InlineObject3(
+            session_id=request.cookies.get("session_id"),
+        ) # InlineObject3 |  (optional)
 
-       # example passing only required values which don't have defaults set
-       try:
-           # user_info
-           api_response = api_instance.get_user(user_id)
-       except openapi_client.ApiException as e:
-           print("Exception when calling DefaultApi->get_user: %s\n" % e)
-           resp = make_response(render_template("error.html",title="Error occured"))
-           return resp
+        # example passing only required values which don't have defaults set
+        try:
+            api_instance.post_subscribe(user_id, inline_object3=inline_object3)
+        except openapi_client.ApiException as e:
+            print("Exception when calling DefaultApi->post_subscribe: %s\n" % e)
+            return render_template('error.html',title='error',err=e.body)
 
-   return render_template('user_description.html',title='user page', User=api_response)
+    return render_template('subscribe_done.html',title='subscribe ok')
+@app.route("/unsubscribe/<user_id_str>",methods=["POST"])
+def post_unsubscribe(user_id_str=None):
+    with openapi_client.ApiClient(configuration=configuration) as api_client:
+        # Create an instance of the API class
+        api_instance = default_api.DefaultApi(api_client)
+        user_id = int(user_id_str) # int |
+        inline_object4 = InlineObject4(
+            session_id=request.cookies.get("session_id"),
+        ) # InlineObject3 |  (optional)
+
+        # example passing only required values which don't have defaults set
+        try:
+            api_instance.delete_subscribe(user_id, inline_object4=inline_object4)
+        except openapi_client.ApiException as e:
+            print("Exception when calling DefaultApi->post_subscribe: %s\n" % e)
+            return render_template('error.html',title='error',err=e.body)
+
+    return render_template('unsubscribe_done.html',title='subscribe ok')
 
 @app.route("/post-haiku")
 def get_post_haiku(): #地獄みたいな名前だが、post-haikuへのGETリクエストを捌くところです
@@ -159,7 +179,7 @@ def post_post_haiku():
             api_instance.post_haiku(inline_object2=inline_object2)
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->post_haiku: %s\n" % e)
-            return render_template('session_error.html',title='session error')
+            return render_template('error.html',title='error',err=e)
         return render_template('post-haiku_done.html',title='post haiku')
 
 @app.route("/timeline")
@@ -188,8 +208,8 @@ def get_timeline():
     url = "http://api-server:8080/api/timeline"
     json_data = {"session_id": request.cookies.get("session_id")}
     r = rq.get(url,json=json_data)
-    if r.text=="invalid session id":
-        return render_template('session_error.html',title='session error')
+    if r.status_code!=200:
+        return render_template('error.html',title='error',err=r.text)
     else: 
         return render_template('timeline.html',title='timeline', Haikus=r.json())
 ## おまじない
