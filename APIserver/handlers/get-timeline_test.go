@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -164,7 +163,6 @@ func TestGetTimeline(t *testing.T) {
 				assert.Equal(t, test.expected_code, rec.Code)
 				assert.Equal(t, len(test.expected_response), len(actual))
 				for i := 0; i < len(test.expected_response); i++ {
-					log.Println(actual[i].CreatedAt)
 					assert.Equal(t, test.expected_response[i].HaikuId, actual[i].HaikuId)
 				}
 			}

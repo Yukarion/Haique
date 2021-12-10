@@ -196,7 +196,6 @@ def get_timeline():
     #     # and optional values
     #     try:
     #         # timeline
-    #         print(inline_object5)
     #         api_response = api_instance.get_timeline(inline_object5=inline_object5)
     #     except openapi_client.ApiException as e:
     #         print("Exception when calling DefaultApi->get_timeline: %s\n" % e)
