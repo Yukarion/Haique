@@ -1,13 +1,19 @@
 version: '3.4'
 services:
+  web-server:
+    container_name: webserver
+    restart: always
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./build/web-server/default.conf:/etc/nginx/conf.d/default.conf
   api-server:
     build:
       context: .
       dockerfile: ./build/APIserver/dev/Dockerfile
     container_name: api-server
     restart: always
-    ports:
-      - 8080:8080
     depends_on:
       - redis
     tty: true
@@ -19,15 +25,11 @@ services:
       dockerfile: ./build/BFF/dev/Dockerfile
     container_name: bff
     restart: always
-    ports:
-      - 5000:5000
     volumes:
       - "./BFF/:/app"
 
   redis:
     container_name: redis
     image: redis:latest
-    ports:
-      - 6379:6379
     volumes:
       - "./build/redis/data:/data"
