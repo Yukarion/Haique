@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/labstack/echo/v4"
@@ -48,7 +49,7 @@ func (c *Container) PostSignup(ctx echo.Context) error {
 	}
 	user_id_str := strconv.Itoa(int(user_id))
 	c.RedisClient.Set(ctxBG, name+":user_id", user_id, 0)
-	c.RedisClient.Set(ctxBG, session_id+":linked_user_id", user_id, 0)
+	c.RedisClient.Set(ctxBG, session_id+":linked_user_id", user_id, time.Hour*1)
 	c.RedisClient.Set(ctxBG, "user_id:"+user_id_str+":name", name, 0)
 	return ctx.JSON(http.StatusCreated, models.InlineObject3{SessionId: session_id})
 }
