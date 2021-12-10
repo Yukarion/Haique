@@ -10,7 +10,7 @@ import (
 
 // DeleteSubscribe -
 func (c *Container) DeleteSubscribe(ctx echo.Context) error {
-	var payload models.SessionId
+	var payload models.InlineObject3
 
 	if err := (&echo.DefaultBinder{}).BindBody(ctx, &payload); err != nil {
 		return err

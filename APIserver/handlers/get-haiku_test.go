@@ -21,11 +21,11 @@ func TestGetHaiku(t *testing.T) {
 
 	subscribe_pair := []pair{
 		{
-			subscriber_session_id: models.SessionId{SessionId: "1"},
+			subscriber_session_id: models.InlineObject3{SessionId: "1"},
 			receiver_user_id:      2,
 		},
 		{
-			subscriber_session_id: models.SessionId{SessionId: "2"},
+			subscriber_session_id: models.InlineObject3{SessionId: "2"},
 			receiver_user_id:      1,
 		},
 	}

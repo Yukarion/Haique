@@ -236,7 +236,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_timeline**
-> [Haiku] get_timeline()
+> [Haiku], none_type get_timeline()
 
 timeline
 
@@ -288,7 +288,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[Haiku]**](Haiku.md)
+[**[Haiku], none_type**](Haiku.md)
 
 ### Authorization
 
@@ -309,7 +309,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_top**
-> [Haiku] get_top()
+> [Haiku], none_type get_top()
 
 top
 
@@ -351,7 +351,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**[Haiku]**](Haiku.md)
+[**[Haiku], none_type**](Haiku.md)
 
 ### Authorization
 

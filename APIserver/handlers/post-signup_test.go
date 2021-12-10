@@ -29,25 +29,25 @@ func TestSignup(t *testing.T) {
 		title             string
 		input             models.InlineObject
 		expected_code     int
-		expected_response models.SessionId
+		expected_response models.InlineObject3
 	}{
 		{
 			title:             "Create First User",
 			input:             models.InlineObject{Name: "signup_first", Pw: "test"},
 			expected_code:     http.StatusCreated,
-			expected_response: models.SessionId{SessionId: "1"},
+			expected_response: models.InlineObject3{SessionId: "1"},
 		},
 		{
 			title:             "Username Conflict",
 			input:             models.InlineObject{Name: "signup_first", Pw: "test"},
 			expected_code:     http.StatusConflict,
-			expected_response: models.SessionId{SessionId: ""},
+			expected_response: models.InlineObject3{SessionId: ""},
 		},
 		{
 			title:             "Create Second User",
 			input:             models.InlineObject{Name: "signup_second", Pw: "test"},
 			expected_code:     http.StatusCreated,
-			expected_response: models.SessionId{SessionId: "2"},
+			expected_response: models.InlineObject3{SessionId: "2"},
 		},
 	}
 
@@ -61,7 +61,7 @@ func TestSignup(t *testing.T) {
 			ctx.SetPath("/api/signup")
 
 			if assert.NoError(t, c.PostSignup(ctx)) {
-				var actual models.SessionId
+				var actual models.InlineObject3
 				json.Unmarshal(rec.Body.Bytes(), &actual)
 				assert.Equal(t, test.expected_code, rec.Code)
 				assert.Equal(t, test.expected_response.SessionId, actual.SessionId)

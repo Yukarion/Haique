@@ -4,5 +4,5 @@ type InlineResponse200 struct {
 
 	User User `json:"user"`
 
-	Haikus []Haiku `json:"haikus"`
+	Haikus []Haiku `json:"haikus,omitempty"`
 }

@@ -110,12 +110,11 @@ class InlineResponse200(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, user, haikus, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, user, *args, **kwargs):  # noqa: E501
         """InlineResponse200 - a model defined in OpenAPI
 
         Args:
             user (User):
-            haikus ([Haiku]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -148,6 +147,7 @@ class InlineResponse200(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            haikus ([Haiku]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -176,7 +176,6 @@ class InlineResponse200(ModelNormal):
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
         self.user = user
-        self.haikus = haikus
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -197,12 +196,11 @@ class InlineResponse200(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, user, haikus, *args, **kwargs):  # noqa: E501
+    def __init__(self, user, *args, **kwargs):  # noqa: E501
         """InlineResponse200 - a model defined in OpenAPI
 
         Args:
             user (User):
-            haikus ([Haiku]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -235,6 +233,7 @@ class InlineResponse200(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            haikus ([Haiku]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -261,7 +260,6 @@ class InlineResponse200(ModelNormal):
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
         self.user = user
-        self.haikus = haikus
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

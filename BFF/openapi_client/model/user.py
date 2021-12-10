@@ -110,16 +110,12 @@ class User(ModelNormal):
 
     @classmethod
     @convert_js_args_to_python_args
-    def _from_openapi_data(cls, user_id, name, subscription, subscribed_by, author_haiku_id_list, timeline_haiku_id_list, *args, **kwargs):  # noqa: E501
+    def _from_openapi_data(cls, user_id, name, *args, **kwargs):  # noqa: E501
         """User - a model defined in OpenAPI
 
         Args:
             user_id (int):
             name (str):
-            subscription ([int]):
-            subscribed_by ([int]):
-            author_haiku_id_list ([int]):
-            timeline_haiku_id_list ([int]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -152,6 +148,10 @@ class User(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            subscription ([int]): [optional]  # noqa: E501
+            subscribed_by ([int]): [optional]  # noqa: E501
+            author_haiku_id_list ([int]): [optional]  # noqa: E501
+            timeline_haiku_id_list ([int]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -181,10 +181,6 @@ class User(ModelNormal):
 
         self.user_id = user_id
         self.name = name
-        self.subscription = subscription
-        self.subscribed_by = subscribed_by
-        self.author_haiku_id_list = author_haiku_id_list
-        self.timeline_haiku_id_list = timeline_haiku_id_list
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \
@@ -205,16 +201,12 @@ class User(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, user_id, name, subscription, subscribed_by, author_haiku_id_list, timeline_haiku_id_list, *args, **kwargs):  # noqa: E501
+    def __init__(self, user_id, name, *args, **kwargs):  # noqa: E501
         """User - a model defined in OpenAPI
 
         Args:
             user_id (int):
             name (str):
-            subscription ([int]):
-            subscribed_by ([int]):
-            author_haiku_id_list ([int]):
-            timeline_haiku_id_list ([int]):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -247,6 +239,10 @@ class User(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
+            subscription ([int]): [optional]  # noqa: E501
+            subscribed_by ([int]): [optional]  # noqa: E501
+            author_haiku_id_list ([int]): [optional]  # noqa: E501
+            timeline_haiku_id_list ([int]): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -274,10 +270,6 @@ class User(ModelNormal):
 
         self.user_id = user_id
         self.name = name
-        self.subscription = subscription
-        self.subscribed_by = subscribed_by
-        self.author_haiku_id_list = author_haiku_id_list
-        self.timeline_haiku_id_list = timeline_haiku_id_list
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

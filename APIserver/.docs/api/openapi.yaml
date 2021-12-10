@@ -172,21 +172,10 @@ paths:
         "200":
           content:
             application/json:
-              examples:
-                example-1:
-                  value:
-                  - haiku_id: 0
-                    author_id: 0
-                    content:
-                      first: string
-                      second: string
-                      third: string
-                      author_name: string
-                    likes: 0
-                    created_at: 0
               schema:
                 items:
                   $ref: '#/components/schemas/Haiku'
+                nullable: true
                 type: array
           description: OK
       summary: top
@@ -227,6 +216,7 @@ paths:
                 description: タイムラインでの俳句表示は名前以外のUser情報を載せない
                 items:
                   $ref: '#/components/schemas/Haiku'
+                nullable: true
                 type: array
           description: OK
       summary: timeline
@@ -386,11 +376,7 @@ components:
             type: integer
           type: array
       required:
-      - author_haiku_id_list
       - name
-      - subscribed_by
-      - subscription
-      - timeline_haiku_id_list
       - user_id
       type: object
       x-examples:
@@ -570,7 +556,6 @@ components:
             $ref: '#/components/schemas/Haiku'
           type: array
       required:
-      - haikus
       - user
       type: object
     inline_response_200_1:
