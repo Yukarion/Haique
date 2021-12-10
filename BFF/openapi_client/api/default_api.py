@@ -202,7 +202,7 @@ class DefaultApi(object):
         )
         self.get_timeline_endpoint = _Endpoint(
             settings={
-                'response_type': ([Haiku],),
+                'response_type': ([Haiku], none_type,),
                 'auth': [],
                 'endpoint_path': '/api/timeline',
                 'operation_id': 'get_timeline',
@@ -250,7 +250,7 @@ class DefaultApi(object):
         )
         self.get_top_endpoint = _Endpoint(
             settings={
-                'response_type': ([Haiku],),
+                'response_type': ([Haiku], none_type,),
                 'auth': [],
                 'endpoint_path': '/api/top',
                 'operation_id': 'get_top',
@@ -791,7 +791,7 @@ class DefaultApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            [Haiku]
+            [Haiku], none_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -857,7 +857,7 @@ class DefaultApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            [Haiku]
+            [Haiku], none_type
                 If the method is called asynchronously, returns the request
                 thread.
         """

@@ -208,20 +208,9 @@ paths:
             application/json:
               schema:
                 type: array
+                nullable: true
                 items:
                   $ref: '#/components/schemas/Haiku'
-              examples:
-                example-1:
-                  value:
-                    - haiku_id: 0
-                      author_id: 0
-                      content:
-                        first: string
-                        second: string
-                        third: string
-                        author_name: string
-                      likes: 0
-                      created_at: 0
       operationId: get-top
       description: トップ30件のhaikuの取得
       parameters: []
@@ -238,6 +227,7 @@ paths:
               schema:
                 type: array
                 description: タイムラインでの俳句表示は名前以外のUser情報を載せない
+                nullable: true
                 items:
                   $ref: '#/components/schemas/Haiku'
       operationId: get-timeline
@@ -294,7 +284,6 @@ paths:
                       $ref: '#/components/schemas/Haiku'
                 required:
                   - user
-                  - haikus
       operationId: get-user
       description: ユーザー情報
       parameters: []
@@ -400,10 +389,6 @@ components:
       required:
         - user_id
         - name
-        - subscription
-        - subscribed_by
-        - author_haiku_id_list
-        - timeline_haiku_id_list
     Haiku:
       description: ''
       type: object
