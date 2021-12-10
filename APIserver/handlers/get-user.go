@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
@@ -26,25 +27,27 @@ func (c *Container) GetUser(ctx echo.Context) error {
 	}
 	tmp_res.User.Name = name
 
-	subscription_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":subscription", 0, -1).Result()
+	subscription_id_str_list, _ := c.RedisClient.SMembers(ctxBG, "user_id:"+user_id_str+":subscription").Result()
 	for _, subscription_id_str := range subscription_id_str_list {
 		subscription_id, _ := strconv.Atoi(subscription_id_str)
 		tmp_res.User.Subscription = append(tmp_res.User.Subscription, int64(subscription_id))
 	}
 
-	subscribed_by_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":subscribed_by", 0, -1).Result()
+	subscribed_by_id_str_list, _ := c.RedisClient.SMembers(ctxBG, "user_id:"+user_id_str+":subscribed_by").Result()
 	for _, subscribed_by_id_str := range subscribed_by_id_str_list {
 		subscribed_by_id, _ := strconv.Atoi(subscribed_by_id_str)
 		tmp_res.User.SubscribedBy = append(tmp_res.User.SubscribedBy, int64(subscribed_by_id))
 	}
 
-	timeline_haiku_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":haiku_id_list", 0, -1).Result()
+	timeline_haiku_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":timeline_haiku_id_list", 0, -1).Result()
 	for _, timeline_haiku_id_str := range timeline_haiku_id_str_list {
 		timeline_haiku_id, _ := strconv.Atoi(timeline_haiku_id_str)
 		tmp_res.User.TimelineHaikuIdList = append(tmp_res.User.TimelineHaikuIdList, int64(timeline_haiku_id))
 	}
 
-	author_haiku_id_str_list, _ := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+"author_haiku_id_list", 0, -1).Result()
+	author_haiku_id_str_list, err := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":author_haiku_id_list", 0, -1).Result()
+	log.Println(err)
+	log.Println(author_haiku_id_str_list)
 	for _, author_haiku_id_str := range author_haiku_id_str_list {
 
 		var tmp_haiku models.Haiku
@@ -69,6 +72,5 @@ func (c *Container) GetUser(ctx echo.Context) error {
 
 		tmp_res.Haikus = append(tmp_res.Haikus, tmp_haiku)
 	}
-
 	return ctx.JSON(http.StatusOK, tmp_res)
 }
