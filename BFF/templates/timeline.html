@@ -4,7 +4,7 @@
 {% if Haikus %}
 <ul>
   {% for Haiku in Haikus %}
-  <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」  --{{Haiku.content.author_name}}</li>
+  <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」 --<a href="/user/{{Haiku.author_id}}">{{Haiku.content.author_name}}</a></li>
   {% endfor %}
 </ul>
 {% else %}

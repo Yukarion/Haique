@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, make_response
+from flask.wrappers import Response
 
 import openapi_client
 from openapi_client.api import default_api
@@ -30,7 +31,7 @@ def get_top():
             print("Exception when calling DefaultApi->get_top: %s\n" % e)
             return render_template("error.html",title="Error occured")
 
-        return render_template('top.html',title='top_30Haiku', Haikus=api_response)
+        return render_template('top.html',title='top 30 Haikus', Haikus=api_response)
 
 @app.route("/signup")
 def get_signup():
@@ -51,7 +52,7 @@ def post_signup():
             api_response = api_instance.post_signup(inline_object=inline_object)
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->post_signup: %s\n" % e)
-            return render_template('signup.html',title='signup',err="Already used name...")
+            return render_template('signup.html',title='sign up',err="Already used name...")
         resp = make_response(render_template('signup_done.html',title='signup'))
         resp.set_cookie("session_id",api_response.session_id)
         return resp
@@ -73,8 +74,8 @@ def post_signin():
             api_response = api_instance.post_signin(inline_object1=inline_object1)
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->post_signin: %s\n" % e)
-            return render_template('signin.html',title='signup',err="Wrong password or name")
-        resp = make_response(render_template('signup_done.html',title='signup'))
+            return render_template('signin.html',title='sign in',err="Wrong password or name")
+        resp = make_response(render_template('signup_done.html',title='sign in'))
         resp.set_cookie("session_id",api_response.session_id)
         return resp
 
@@ -83,7 +84,7 @@ def get_haiku(haiku_id_str=None):
    with openapi_client.ApiClient(configuration=configuration) as api_client:
        # Create an instance of the API class
        api_instance = default_api.DefaultApi(api_client)
-       haiku_id = 1 # int |
+       haiku_id = int(haiku_id_str) # int |
 
        # example passing only required values which don't have defaults set
        try:
@@ -94,7 +95,7 @@ def get_haiku(haiku_id_str=None):
            resp = make_response(render_template("error.html",title="Error occured"))
            return resp
 
-   return render_template('haiku_description.html',title='haiku_description', Haiku=api_response)
+   return render_template('haiku_description.html',title='haiku description', response=api_response)
 
 @app.route("/user/<user_id_str>")
 def get_user(user_id_str=None):
@@ -112,7 +113,24 @@ def get_user(user_id_str=None):
            resp = make_response(render_template("error.html",title="Error occured"))
            return resp
 
-   return render_template('user_description.html',title='user_page', User=api_response)
+   return render_template('user_description.html',title='user page', User=api_response)
+@app.route("/subscribe/<user_id_str>",methods=["POST"])
+def get_user(user_id_str=None):
+   with openapi_client.ApiClient(configuration=configuration) as api_client:
+       # Create an instance of the API class
+       api_instance = default_api.DefaultApi(api_client)
+       user_id = 1 # int |
+
+       # example passing only required values which don't have defaults set
+       try:
+           # user_info
+           api_response = api_instance.get_user(user_id)
+       except openapi_client.ApiException as e:
+           print("Exception when calling DefaultApi->get_user: %s\n" % e)
+           resp = make_response(render_template("error.html",title="Error occured"))
+           return resp
+
+   return render_template('user_description.html',title='user page', User=api_response)
 
 @app.route("/post-haiku")
 def get_post_haiku(): #地獄みたいな名前だが、post-haikuへのGETリクエストを捌くところです
@@ -170,7 +188,10 @@ def get_timeline():
     url = "http://api-server:8080/api/timeline"
     json_data = {"session_id": request.cookies.get("session_id")}
     r = rq.get(url,json=json_data)
-    return render_template('timeline.html',title='timeline', Haikus=r.json())
+    if r.text=="invalid session id":
+        return render_template('session_error.html',title='session error')
+    else: 
+        return render_template('timeline.html',title='timeline', Haikus=r.json())
 ## おまじない
 if __name__ == "__main__":
     app.run(debug=True,port=5000,host="0.0.0.0")
