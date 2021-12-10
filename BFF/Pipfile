@@ -8,6 +8,7 @@ python-dateutil = ">=2.5.3"
 urllib3 = ">=1.25.3"
 flask = "*"
 requests = "*"
+waitress = "*"
 
 [dev-packages]
 

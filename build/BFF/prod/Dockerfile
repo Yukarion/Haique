@@ -1,6 +1,6 @@
 FROM python:3.8 AS builder
 WORKDIR /usr/src/app
-COPY Pipfile Pipfile.lock ./
+COPY ./BFF/Pipfile ./BFF/Pipfile.lock ./
 RUN pip install pipenv \
  && pipenv install --system
 

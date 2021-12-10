@@ -11,7 +11,7 @@ services:
   api-server:
     build:
       context: .
-      dockerfile: ./build/APIserver/dev/Dockerfile
+      dockerfile: ./build/APIserver/prod/Dockerfile
     container_name: api-server
     restart: always
     depends_on:
@@ -22,7 +22,7 @@ services:
   bff:
     build:
       context: .
-      dockerfile: ./build/BFF/dev/Dockerfile
+      dockerfile: ./build/BFF/prod/Dockerfile
     container_name: bff
     restart: always
     volumes:

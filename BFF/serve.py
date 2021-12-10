@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, make_response
 from flask.wrappers import Response
 
+from waitress import serve
+
 import openapi_client
 from openapi_client.api import default_api
 from openapi_client.models import *
@@ -151,7 +153,6 @@ def post_unsubscribe(user_id_str=None):
             return render_template('error.html',title='error',err=e.body)
 
     return render_template('unsubscribe_done.html',title='subscribe ok')
->>>>>>> upstream/master
 
 @app.route("/post-haiku")
 def get_post_haiku(): #地獄みたいな名前だが、post-haikuへのGETリクエストを捌くところです
@@ -214,4 +215,4 @@ def get_timeline():
         return render_template('timeline.html',title='timeline', Haikus=r.json())
 ## おまじない
 if __name__ == "__main__":
-    app.run(debug=True,port=5000,host="0.0.0.0")
+    serve(app,port=5000,host="0.0.0.0")
