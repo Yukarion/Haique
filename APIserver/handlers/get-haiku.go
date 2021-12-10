@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -39,7 +38,6 @@ func (c *Container) GetHaiku(ctx echo.Context) error {
 	tmp_res.Author.Name, _ = c.RedisClient.Get(ctxBG, "user_id:"+author_id_str+":name").Result()
 
 	subscription_id_str_list, _ := c.RedisClient.SMembers(ctxBG, "user_id:"+author_id_str+":subscription").Result()
-	log.Println(subscription_id_str_list)
 	for _, subscription_id_str := range subscription_id_str_list {
 		subscription_id, _ := strconv.Atoi(subscription_id_str)
 		tmp_res.Author.Subscription = append(tmp_res.Author.Subscription, int64(subscription_id))
@@ -62,6 +60,5 @@ func (c *Container) GetHaiku(ctx echo.Context) error {
 		timeline_haiku_id, _ := strconv.Atoi(timeline_haiku_id_str)
 		tmp_res.Author.TimelineHaikuIdList = append(tmp_res.Author.TimelineHaikuIdList, int64(timeline_haiku_id))
 	}
-	log.Println(tmp_res)
 	return ctx.JSON(http.StatusOK, tmp_res)
 }

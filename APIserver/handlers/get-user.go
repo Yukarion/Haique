@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -46,8 +45,6 @@ func (c *Container) GetUser(ctx echo.Context) error {
 	}
 
 	author_haiku_id_str_list, err := c.RedisClient.LRange(ctxBG, "user_id:"+user_id_str+":author_haiku_id_list", 0, -1).Result()
-	log.Println(err)
-	log.Println(author_haiku_id_str_list)
 	for _, author_haiku_id_str := range author_haiku_id_str_list {
 
 		var tmp_haiku models.Haiku

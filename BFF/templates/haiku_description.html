@@ -1,10 +1,8 @@
 {% extends "index.html" %}
 {% block content %}
 <h3>Haiku description</h3>
+<h4>author: <a href="/user/{{response.author.user_id}}">{{response.author.name  }}</a>
 <ul>
-  <li>{{Haiku.haiku.content.first}}</li>
-  <li>{{Haiku.haiku.content.second}}</li>
-  <li>{{Haiku.haiku.content.third}}</li>
-  <li>--<a href="/user/{{Haiku.author.user_id}}">{{Haiku.author.name}}</a></li>
+  <li>「{{response.haiku.content.first}} {{response.haiku.content.second}} {{response.haiku.content.third}}」 --<a href="/user/{{response.haiku.author_id}}">{{response.haiku.content.author_name}}</a></li>
 </ul>
 {% endblock %}

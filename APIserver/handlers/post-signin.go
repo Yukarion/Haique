@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/Mackyson/Haique/APIserver/models"
 	"github.com/labstack/echo/v4"
@@ -25,7 +26,7 @@ func (c *Container) PostSignin(ctx echo.Context) error {
 	}
 
 	if isValidPassword(hashedPw, rawPw) {
-		userId, err := c.RedisClient.Get(ctxBG, name+":user_id").Result()
+		user_id, err := c.RedisClient.Get(ctxBG, name+":user_id").Result()
 		if err != nil {
 			return err
 		}
@@ -33,7 +34,7 @@ func (c *Container) PostSignin(ctx echo.Context) error {
 		if err != nil {
 			return err
 		}
-		c.RedisClient.Set(ctxBG, session_id+":linked_user_id", userId, 0)
+		c.RedisClient.Set(ctxBG, session_id+":linked_user_id", user_id, time.Hour*1)
 		return ctx.JSON(http.StatusOK, models.InlineObject3{SessionId: session_id})
 	}
 	return ctx.NoContent(http.StatusBadRequest)

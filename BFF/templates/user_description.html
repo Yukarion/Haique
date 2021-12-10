@@ -2,15 +2,40 @@
 {% block content %}
 <h3>User page</h3>
 <h4>{{User.user.name}}</h4>
-<h3>{{User}}</h3>
-<form action="/api/subscribe/{{User.user.user_id}}" method="POST" enctype="multipart/form-data">
-  <button>subscription</button>
+<form action="/subscribe/{{User.user.user_id}}" method="POST" enctype="multipart/form-data">
+  <button>subscribe</button>
 </form>
-<h5>subscription: {{User.user.subscription}}</h5>
-<h5>subscribed_by: {{User.user.subscribed_by}}</h5>
+<form action="/unsubscribe/{{User.user.user_id}}" method="POST" enctype="multipart/form-data">
+  <button>unsubscribe</button>
+</form>
+<h5>subscribes</h5>
+{% if User.user.subscription %}
 <ul>
-  {% for Haiku in User.haikus %}
-  <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」  --{{Haiku.content.author_name}}</li>
+  {% for user_id in User.user.subscription %}
+  <li><a href="/user/{{user_id}}">user_id:{{user_id}}</a></li>
   {% endfor %}
 </ul>
+{% else %}
+Nobody
+{% endif %}
+<h5>subscribed by</h5>
+{% if User.user.subscribed_by %}
+<ul>
+  {% for user_id in User.user.subscribed_by %}
+  <li><a href="/user/{{user_id}}">user_id:{{user_id}}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+Nobody
+{% endif %}
+<h5>Recent Haikus</h5>
+{% if User.haikus %}
+<ul>
+  {% for Haiku in User.haikus %}
+  <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」 --<a href="/user/{{Haiku.author_id}}">{{Haiku.content.author_name}}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+No haiku posted yet...
+{% endif %}
 {% endblock %}

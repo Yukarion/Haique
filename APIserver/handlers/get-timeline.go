@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -25,7 +24,6 @@ func (c *Container) GetTimeline(ctx echo.Context) error {
 
 	user_id_str, err := c.RedisClient.Get(ctxBG, session_id+":linked_user_id").Result()
 	if err != nil {
-		log.Println(session_id)
 		return ctx.HTML(http.StatusBadRequest, "invalid session id")
 	}
 	var haiku_list []models.Haiku
