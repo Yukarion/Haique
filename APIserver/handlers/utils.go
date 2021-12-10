@@ -12,7 +12,7 @@ func genUUID() (string, error) {
 
 }
 
-func isValidSessionId(session_id models.SessionId) bool { //一旦全通し
+func isValidSessionId(session_id models.InlineObject3) bool { //一旦全通し
 	//これいらないかも。
 	/*
 		user_id, err := c.RedisClient.Get(ctxBG, session_id+":linked_user_id").Result()

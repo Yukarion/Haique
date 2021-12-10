@@ -386,11 +386,7 @@ components:
             type: integer
           type: array
       required:
-      - author_haiku_id_list
       - name
-      - subscribed_by
-      - subscription
-      - timeline_haiku_id_list
       - user_id
       type: object
       x-examples:

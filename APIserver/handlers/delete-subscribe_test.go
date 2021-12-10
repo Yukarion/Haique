@@ -22,11 +22,11 @@ func TestDeleteSubscribe(t *testing.T) {
 	signupUsersForTest(users) //テスト用ユーザーの登録
 	subscribe_pair := []pair{
 		{
-			subscriber_session_id: models.SessionId{SessionId: "1"},
+			subscriber_session_id: models.InlineObject3{SessionId: "1"},
 			receiver_user_id:      2,
 		},
 		{
-			subscriber_session_id: models.SessionId{SessionId: "2"},
+			subscriber_session_id: models.InlineObject3{SessionId: "2"},
 			receiver_user_id:      1,
 		},
 	}
@@ -34,31 +34,31 @@ func TestDeleteSubscribe(t *testing.T) {
 
 	tests := []struct {
 		title         string
-		input         models.SessionId
+		input         models.InlineObject3
 		path_param    string
 		expected_code int
 	}{
 		{
 			title:         "First User Remove Second User",
-			input:         models.SessionId{SessionId: "1"},
+			input:         models.InlineObject3{SessionId: "1"},
 			path_param:    "2",
 			expected_code: http.StatusOK,
 		},
 		{
 			title:         "First User Remove Second User Twice",
-			input:         models.SessionId{SessionId: "1"},
+			input:         models.InlineObject3{SessionId: "1"},
 			path_param:    "2",
 			expected_code: http.StatusOK, //DELETEの冪等性に注意
 		},
 		{
 			title:         "Remove myself",
-			input:         models.SessionId{SessionId: "1"},
+			input:         models.InlineObject3{SessionId: "1"},
 			path_param:    "1",
 			expected_code: http.StatusBadRequest,
 		},
 		{
 			title:         "Remove Unregistered User",
-			input:         models.SessionId{SessionId: "1"},
+			input:         models.InlineObject3{SessionId: "1"},
 			path_param:    "100000",
 			expected_code: http.StatusBadRequest,
 		},

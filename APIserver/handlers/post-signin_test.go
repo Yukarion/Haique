@@ -23,31 +23,31 @@ func TestSignin(t *testing.T) {
 		title             string
 		input             models.InlineObject
 		expected_code     int
-		expected_response models.SessionId
+		expected_response models.InlineObject3
 	}{
 		{
 			title:             "Signin First User",
 			input:             models.InlineObject{Name: "signin_first", Pw: "test"},
 			expected_code:     http.StatusOK,
-			expected_response: models.SessionId{SessionId: "3"},
+			expected_response: models.InlineObject3{SessionId: "3"},
 		},
 		{
 			title:             "Signin with wrong name",
 			input:             models.InlineObject{Name: "UNKNOWN", Pw: "UNKNOWN"},
 			expected_code:     http.StatusBadRequest,
-			expected_response: models.SessionId{SessionId: ""},
+			expected_response: models.InlineObject3{SessionId: ""},
 		},
 		{
 			title:             "Signin with wrong password",
 			input:             models.InlineObject{Name: "signin_first", Pw: "WRONG_PASSWORD"},
 			expected_code:     http.StatusBadRequest,
-			expected_response: models.SessionId{SessionId: ""},
+			expected_response: models.InlineObject3{SessionId: ""},
 		},
 		{
 			title:             "Signin Second User",
 			input:             models.InlineObject{Name: "signin_second", Pw: "test"},
 			expected_code:     http.StatusOK,
-			expected_response: models.SessionId{SessionId: "4"},
+			expected_response: models.InlineObject3{SessionId: "4"},
 		},
 	}
 
@@ -61,7 +61,7 @@ func TestSignin(t *testing.T) {
 			ctx.SetPath("/api/signin")
 
 			if assert.NoError(t, c.PostSignin(ctx)) {
-				var actual models.SessionId
+				var actual models.InlineObject3
 				json.Unmarshal(rec.Body.Bytes(), &actual)
 				assert.Equal(t, test.expected_code, rec.Code)
 				assert.Equal(t, test.expected_response.SessionId, actual.SessionId)

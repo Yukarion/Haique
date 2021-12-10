@@ -22,31 +22,31 @@ func TestPostSubscribe(t *testing.T) {
 	signupUsersForTest(users) //テスト用ユーザーの登録
 	tests := []struct {
 		title         string
-		input         models.SessionId
+		input         models.InlineObject3
 		path_param    string
 		expected_code int
 	}{
 		{
 			title:         "First User Subscribes Second User",
-			input:         models.SessionId{SessionId: "1"},
+			input:         models.InlineObject3{SessionId: "1"},
 			path_param:    "2",
 			expected_code: http.StatusOK,
 		},
 		{
 			title:         "Subscribe with wrong session_id",
-			input:         models.SessionId{SessionId: "WRONG"},
+			input:         models.InlineObject3{SessionId: "WRONG"},
 			path_param:    "2",
 			expected_code: http.StatusBadRequest,
 		},
 		{
 			title:         "Subscribe myself",
-			input:         models.SessionId{SessionId: "1"},
+			input:         models.InlineObject3{SessionId: "1"},
 			path_param:    "1",
 			expected_code: http.StatusBadRequest,
 		},
 		{
 			title:         "Subscribe Unregistered User",
-			input:         models.SessionId{SessionId: "1"},
+			input:         models.InlineObject3{SessionId: "1"},
 			path_param:    "100000",
 			expected_code: http.StatusBadRequest,
 		},

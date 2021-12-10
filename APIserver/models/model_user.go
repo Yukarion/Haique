@@ -6,11 +6,11 @@ type User struct {
 
 	Name string `json:"name"`
 
-	Subscription []int64 `json:"subscription"`
+	Subscription []int64 `json:"subscription,omitempty"`
 
-	SubscribedBy []int64 `json:"subscribed_by"`
+	SubscribedBy []int64 `json:"subscribed_by,omitempty"`
 
-	AuthorHaikuIdList []int64 `json:"author_haiku_id_list"`
+	AuthorHaikuIdList []int64 `json:"author_haiku_id_list,omitempty"`
 
-	TimelineHaikuIdList []int64 `json:"timeline_haiku_id_list"`
+	TimelineHaikuIdList []int64 `json:"timeline_haiku_id_list,omitempty"`
 }

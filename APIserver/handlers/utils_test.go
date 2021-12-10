@@ -49,7 +49,7 @@ func postHaikusForTest(haiku_list []models.InlineObject2) {
 }
 
 type pair struct {
-	subscriber_session_id models.SessionId
+	subscriber_session_id models.InlineObject3
 	receiver_user_id      int64
 }
 
