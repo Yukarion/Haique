@@ -1,0 +1,59 @@
+apiVersion: 2019-12-01
+location: japanwest
+name: haique
+properties:
+  containers:
+  - name: web-server
+    properties:
+      image: haique.azurecr.io/web-server
+      resources:
+        requests:
+          memoryInGB: 1
+          cpu: 1
+        limits:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: 80
+  - name: api-server
+    properties:
+      image: haique.azurecr.io/api-server
+      resources:
+        requests:
+          memoryInGB: 1
+          cpu: 1
+        limits:
+          cpu: 1
+          memoryInGb: 1.5
+  - name: bff
+    properties:
+      image: haique.azurecr.io/bff
+      resources:
+        requests:
+          memoryInGB: 1
+          cpu: 1
+        limits:
+          cpu: 1
+          memoryInGb: 1.5
+  - name: redis
+    properties:
+      image: redis:latest
+      resources:
+        requests:
+          memoryInGB: 1
+          cpu: 1
+        limits:
+          cpu: 1
+          memoryInGb: 1.5
+      volumeMounts:
+      - name: haique-redis
+        mountPath: /data
+  osType: Linux
+  restartPolicy: Always
+  volumes:
+  - name: haique-redis
+    azureFile:
+      shareName: haique-redis
+      storageAccountName: haique
+      storageAccountKey: qwiWduYKFqAqCxSi08u8B3biFPhel9FivEjLbRAK8u9muADHM1O3IogjrwN3Y94aYYDbI+bkl0NorOjj4LFXjA==
+type: Microsoft.ContainerInstance/containerGroups

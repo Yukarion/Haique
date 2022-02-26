@@ -1,35 +1,65 @@
-version: '3.4'
+version: '3'
 services:
   web-server:
     container_name: webserver
     restart: always
-    image: nginx:latest
+    image: haique.azurecr.io/web-server
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+        limits:
+          cpus: '0.5'
+          memory: 2G
     ports:
       - 80:80
-    volumes:
-      - ./build/web-server/default.conf:/etc/nginx/conf.d/default.conf
   api-server:
-    build:
-      context: .
-      dockerfile: ./build/APIserver/prod/Dockerfile
     container_name: api-server
     restart: always
+    image: haique.azurecr.io/api-server
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+        limits:
+          cpus: '1'
+          memory: 2G
     depends_on:
       - redis
     tty: true
-    volumes:
-      - "./APIserver/:/app"
   bff:
-    build:
-      context: .
-      dockerfile: ./build/BFF/prod/Dockerfile
     container_name: bff
+    image: haique.azurecr.io/bff
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+        limits:
+          cpus: '0.5'
+          memory: 2G
     restart: always
-    volumes:
-      - "./BFF/:/app"
 
   redis:
     container_name: redis
     image: redis:latest
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+        limits:
+          cpus: '0.5'
+          memory: 2G
     volumes:
-      - "./build/redis/data:/data"
+      #      - "./build/redis/data:/data"
+      - "dbdata-volume:/data"
+
+volumes:
+  dbdata-volume:
+    driver: azure_file
+    driver_opts:
+      share_name: haique-redis
+      storage_account_name: haique
