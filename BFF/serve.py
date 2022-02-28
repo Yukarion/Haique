@@ -151,7 +151,6 @@ def post_unsubscribe(user_id_str=None):
             return render_template('error.html',title='error',err=e.body)
 
     return render_template('unsubscribe_done.html',title='subscribe ok')
->>>>>>> upstream/master
 
 @app.route("/post-haiku")
 def get_post_haiku(): #地獄みたいな名前だが、post-haikuへのGETリクエストを捌くところです

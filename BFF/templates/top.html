@@ -2,7 +2,7 @@
 {% block content %}
 <h3>newest 30 Haikus</h3>
 {% if Haikus %}
-<ul>
+<ul class="haiku-list">
     {% for Haiku in Haikus %}
     <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」 --<a href="/user/{{Haiku.author_id}}">{{Haiku.content.author_name}}</a></li>
     {% endfor %}

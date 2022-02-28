@@ -3,7 +3,21 @@
 	display:flex;
 	color:#666666;
 }
+
 .navigator-child{
 	list-style-type: none;
 	margin-left: 0.5em;
+}
+
+body{
+	align-items: center;
+	width: 100%;
+	max-width: 800px;
+	font-family: 'Zen Antique', serif;
+	background-color: #f5f5f5;
+}
+
+.haiku-list{
+	writing-mode: vertical-rl;
+	font-family: 'Yuji Syuku', serif;
 }

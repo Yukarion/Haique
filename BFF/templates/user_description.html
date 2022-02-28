@@ -30,7 +30,7 @@ Nobody
 {% endif %}
 <h5>Recent Haikus</h5>
 {% if User.haikus %}
-<ul>
+<ul class="haiku-list">
   {% for Haiku in User.haikus %}
   <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」 --<a href="/user/{{Haiku.author_id}}">{{Haiku.content.author_name}}</a></li>
   {% endfor %}
