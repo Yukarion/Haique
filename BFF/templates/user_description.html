@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-<h3>User page</h3>
+<h2 class="page-name">User page</h2>
 <h4>{{User.user.name}}</h4>
 <form action="/subscribe/{{User.user.user_id}}" method="POST" enctype="multipart/form-data">
   <button>subscribe</button>
@@ -32,7 +32,20 @@ Nobody
 {% if User.haikus %}
 <ul class="haiku-list">
   {% for Haiku in User.haikus %}
-  <li>「{{Haiku.content.first}} {{Haiku.content.second}} {{Haiku.content.third}}」 --<a href="/user/{{Haiku.author_id}}">{{Haiku.content.author_name}}</a></li>
+    <li class="haiku">
+      <div class="haiku-first">
+          {{Haiku.content.first}}
+      </div>
+      <div class="haiku-second">
+          {{Haiku.content.second}}
+      </div>
+      <div class="haiku-third">
+          {{Haiku.content.third}}
+      </div>
+      <a class="haiku-author" href="/user/{{Haiku.author_id}}">
+          {{Haiku.content.author_name}}
+      </a>
+    </li>
   {% endfor %}
 </ul>
 {% else %}
