@@ -75,7 +75,7 @@ def post_signin():
         except openapi_client.ApiException as e:
             print("Exception when calling DefaultApi->post_signin: %s\n" % e)
             return render_template('signin.html',title='sign in',err="Wrong password or name")
-        resp = make_response(render_template('signup_done.html',title='sign in'))
+        resp = make_response(render_template('signin_done.html',title='sign in'))
         resp.set_cookie("session_id",api_response.session_id)
         return resp
 
