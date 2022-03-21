@@ -79,7 +79,7 @@ def post_signin():
         resp.set_cookie("session_id",api_response.session_id)
         return resp
 
-@app.route("/api/haiku/<haiku_id_str>")
+@app.route("/haiku/<haiku_id_str>")
 def get_haiku(haiku_id_str=None):
    with openapi_client.ApiClient(configuration=configuration) as api_client:
        # Create an instance of the API class

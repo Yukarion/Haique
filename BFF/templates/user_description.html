@@ -23,7 +23,7 @@
     <div class="col-6">
       <h5>フォロー</h5>
       {% if User.user.subscription %}
-      <a href="#">{{User.user.subscription | length}}</a>
+      {{User.user.subscription | length}}
       {% else %}
       0
       {% endif %}
@@ -31,7 +31,7 @@
     <div class="col-6">
       <h5>フォロワー</h5>
       {% if User.user.subscribed_by %}
-      <a href="#">{{User.user.subscribed_by | length}}</a>
+      {{User.user.subscribed_by | length}}
       {% else %}
       0
       {% endif %}
